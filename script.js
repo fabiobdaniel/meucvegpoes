@@ -334,6 +334,34 @@ function setupEventListeners() {
         });
     });
 
+    // CTA buttons functionality
+    const contactButton = document.querySelector('.btn-primary');
+    const learnButton = document.querySelector('.btn-secondary');
+    
+    if (contactButton) {
+        contactButton.addEventListener('click', function() {
+            const target = document.querySelector('#contato');
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    }
+    
+    if (learnButton) {
+        learnButton.addEventListener('click', function() {
+            const target = document.querySelector('#sobre');
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    }
+
     // Scroll controls
     setupScrollControls();
 }
