@@ -122,6 +122,14 @@ const FALLBACK_TRANSLATIONS = {
     }
 };
 
+// Edit button handler
+function handleEditClick(e) {
+    e.preventDefault();
+    console.log('Edit button clicked - opening modal');
+    alert('Botão editar clicado!'); // Teste simples
+    openEditModal();
+}
+
 // Translation functions
 async function translateText(text, fromLang, toLang) {
     if (!text || text.trim() === '') return text;
@@ -405,8 +413,8 @@ function initializeApp() {
         if (cvData && Object.keys(cvData).length > 0) {
             updatePageContent();
         } else {
-            console.log('No CV data available, loading fallback...');
-            loadFallbackData();
+            console.log('No CV data available, force loading...');
+            forceLoadData();
         }
     }, 1000);
 }
@@ -435,20 +443,30 @@ function setupEventListeners() {
         console.error('Language selector not found!');
     }
 
-    // Edit button
+    // Edit button - multiple approaches
     const editModeBtn = document.getElementById('editModeBtn');
     console.log('Edit button element:', editModeBtn);
+    
     if (editModeBtn) {
-        editModeBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            console.log('Edit button clicked - opening modal');
-            alert('Botão editar clicado!'); // Teste simples
-            openEditModal();
-        });
+        // Remove any existing listeners
+        editModeBtn.removeEventListener('click', handleEditClick);
+        
+        // Add new listener
+        editModeBtn.addEventListener('click', handleEditClick);
         console.log('Edit button event listener added successfully');
     } else {
         console.error('Edit button not found!');
     }
+    
+    // Also try to add listener after DOM is fully loaded
+    setTimeout(() => {
+        const editBtn = document.getElementById('editModeBtn');
+        if (editBtn && !editBtn.hasAttribute('data-listener-added')) {
+            editBtn.addEventListener('click', handleEditClick);
+            editBtn.setAttribute('data-listener-added', 'true');
+            console.log('Edit button listener added after timeout');
+        }
+    }, 2000);
 
     // Login and edit button
     const loginAndEditBtn = document.getElementById('loginAndEditBtn');
@@ -628,6 +646,21 @@ async function loadCVData() {
         }
     } catch (error) {
         console.error('Error loading CV data:', error);
+        loadFallbackData();
+    }
+}
+
+// Force load data immediately
+function forceLoadData() {
+    console.log('Force loading data...');
+    if (typeof EMBEDDED_CV_DATA !== 'undefined') {
+        allLanguageData = EMBEDDED_CV_DATA;
+        cvData = allLanguageData[currentLanguage];
+        console.log('Data force loaded:', cvData);
+        updatePageContent();
+        applyInterfaceTranslations();
+    } else {
+        console.error('EMBEDDED_CV_DATA not available for force load');
         loadFallbackData();
     }
 }
