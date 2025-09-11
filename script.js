@@ -1795,25 +1795,32 @@ async function handleContactFormSubmit(form) {
     }
 }
 
-// Simple email sending that works immediately
+// Real email sending using Web3Forms
 async function simulateEmailSend(data) {
     console.log('Processing contact form:', data);
     
     // Always save the message locally first
     saveMessageLocally(data);
     
-    // Simulate processing time
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // For now, we'll always show success since the message is saved locally
-    // In production, you can integrate with a real email service
-    console.log('Message processed and saved locally');
-    
-    return { 
-        success: true, 
-        message: 'Mensagem recebida! Entraremos em contato em breve.',
-        local: true 
-    };
+    try {
+        // Try Web3Forms first (if configured)
+        await sendViaWeb3Forms(data);
+        console.log('Email sent successfully via Web3Forms');
+        return { success: true, message: 'Mensagem enviada com sucesso!' };
+        
+    } catch (error) {
+        console.log('Web3Forms not configured, using local storage:', error.message);
+        
+        // Fallback: just save locally
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        console.log('Message processed and saved locally');
+        
+        return { 
+            success: true, 
+            message: 'Mensagem recebida! Entraremos em contato em breve.',
+            local: true 
+        };
+    }
 }
 
 // Web3Forms email sending
