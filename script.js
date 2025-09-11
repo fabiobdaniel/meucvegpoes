@@ -1,5 +1,5 @@
 // Global variables
-let currentLanguage = 'en'; // Padrão em inglês
+let currentLanguage = 'pt'; // Padrão em português
 let cvData = {};
 let allLanguageData = {}; // Armazenar todos os dados de todos os idiomas
 
@@ -667,6 +667,7 @@ function updatePageContent() {
     if (cvData.cards && Array.isArray(cvData.cards)) {
         const cardsContainer = document.querySelector('.cards-grid');
         if (cardsContainer) {
+            console.log('Rendering cards:', cvData.cards);
             // Limpar conteúdo existente
             cardsContainer.innerHTML = '';
             
@@ -674,13 +675,33 @@ function updatePageContent() {
             cvData.cards.forEach((card, index) => {
                 const cardElement = document.createElement('div');
                 cardElement.className = 'card';
+                
+                // Definir ícones para cada card baseado no título
+                let iconClass = 'fas fa-rocket'; // padrão
+                if (card.title) {
+                    if (card.title.toLowerCase().includes('inovação') || card.title.toLowerCase().includes('innovation') || card.title.toLowerCase().includes('innovación')) {
+                        iconClass = 'fas fa-rocket';
+                    } else if (card.title.toLowerCase().includes('liderança') || card.title.toLowerCase().includes('leadership') || card.title.toLowerCase().includes('liderazgo')) {
+                        iconClass = 'fas fa-users';
+                    } else if (card.title.toLowerCase().includes('resultados') || card.title.toLowerCase().includes('results') || card.title.toLowerCase().includes('resultados')) {
+                        iconClass = 'fas fa-chart-line';
+                    }
+                }
+                
                 cardElement.innerHTML = `
+                    <div class="card-icon">
+                        <i class="${iconClass}"></i>
+                    </div>
                     <h3>${card.title || ''}</h3>
                     <p>${card.description || ''}</p>
                 `;
                 cardsContainer.appendChild(cardElement);
             });
+        } else {
+            console.error('Cards container not found!');
         }
+    } else {
+        console.log('No cards data or not an array:', cvData.cards);
     }
 }
 

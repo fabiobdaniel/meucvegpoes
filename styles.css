@@ -202,8 +202,21 @@ body {
 
 .cards-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
+    width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .card {
@@ -804,6 +817,7 @@ body {
     
     .cards-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
     
     .about-content {
