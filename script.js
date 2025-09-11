@@ -213,6 +213,14 @@ function initializeApp() {
     loadCVData();
     
     console.log('App initialized successfully!');
+    
+    // Force update after a short delay to ensure DOM is ready
+    setTimeout(() => {
+        console.log('Force updating page content...');
+        if (cvData && Object.keys(cvData).length > 0) {
+            updatePageContent();
+        }
+    }, 1000);
 }
 
 function setupEventListeners() {
