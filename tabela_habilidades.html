@@ -204,6 +204,153 @@
             display: none;
         }
         
+        /* CRUD Styles */
+        .crud-controls {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .modal-title {
+            font-size: 1.5em;
+            color: #ff6b35;
+            font-weight: 700;
+        }
+        
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close:hover {
+            color: #ff6b35;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
+        }
+        
+        .form-actions {
+            text-align: right;
+            margin-top: 30px;
+        }
+        
+        .form-actions .btn {
+            margin: 0 5px;
+        }
+        
+        .editable-row {
+            position: relative;
+        }
+        
+        .row-actions {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: none;
+        }
+        
+        .editable-row:hover .row-actions {
+            display: block;
+        }
+        
+        .row-actions .btn {
+            padding: 6px 12px;
+            margin: 0 2px;
+            font-size: 12px;
+        }
+        
+        .skills-list {
+            position: relative;
+        }
+        
+        .skills-list:hover .row-actions {
+            display: block;
+        }
+        
         @media (max-width: 768px) {
             .language-tabs {
                 flex-direction: column;
@@ -234,6 +381,12 @@
         </div>
         
         <div class="content">
+            <div class="crud-controls">
+                <button class="btn" onclick="openAddModal()">➕ Adicionar Habilidade</button>
+                <button class="btn btn-secondary" onclick="exportData()">📊 Exportar Dados</button>
+                <button class="btn btn-secondary" onclick="importData()">📥 Importar Dados</button>
+            </div>
+            
             <div class="language-tabs">
                 <button class="tab active" onclick="showLanguage('pt')">🇧🇷 Português</button>
                 <button class="tab" onclick="showLanguage('en')">🇺🇸 English</button>
@@ -249,10 +402,16 @@
                             <th>Habilidades</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="pt-skills-tbody">
+                        <tr class="editable-row" data-id="1">
                             <td class="category">Estratégia de Negócios</td>
-                            <td class="skills-list">Análise de Mercado, Planejamento Estratégico, Desenvolvimento de Negócios, Inteligência Competitiva</td>
+                            <td class="skills-list">
+                                Análise de Mercado, Planejamento Estratégico, Desenvolvimento de Negócios, Inteligência Competitiva
+                                <div class="row-actions">
+                                    <button class="btn btn-secondary" onclick="editSkill(1, 'pt')">✏️</button>
+                                    <button class="btn btn-danger" onclick="deleteSkill(1)">🗑️</button>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="category">Liderança</td>
@@ -303,10 +462,16 @@
                             <th>Skills</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="en-skills-tbody">
+                        <tr class="editable-row" data-id="1">
                             <td class="category">Business Strategy</td>
-                            <td class="skills-list">Market Analysis, Strategic Planning, Business Development, Competitive Intelligence</td>
+                            <td class="skills-list">
+                                Market Analysis, Strategic Planning, Business Development, Competitive Intelligence
+                                <div class="row-actions">
+                                    <button class="btn btn-secondary" onclick="editSkill(1, 'en')">✏️</button>
+                                    <button class="btn btn-danger" onclick="deleteSkill(1)">🗑️</button>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="category">Leadership</td>
@@ -357,10 +522,16 @@
                             <th>Habilidades</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
+                    <tbody id="es-skills-tbody">
+                        <tr class="editable-row" data-id="1">
                             <td class="category">Estrategia de Negocios</td>
-                            <td class="skills-list">Análisis de Mercado, Planificación Estratégica, Desarrollo de Negocios, Inteligencia Competitiva</td>
+                            <td class="skills-list">
+                                Análisis de Mercado, Planificación Estratégica, Desarrollo de Negocios, Inteligencia Competitiva
+                                <div class="row-actions">
+                                    <button class="btn btn-secondary" onclick="editSkill(1, 'es')">✏️</button>
+                                    <button class="btn btn-danger" onclick="deleteSkill(1)">🗑️</button>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td class="category">Liderazgo</td>
@@ -465,7 +636,99 @@
         </div>
     </div>
     
+    <!-- Modal para Adicionar/Editar Habilidade -->
+    <div id="skillModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Adicionar Habilidade</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="skillForm">
+                <div class="form-group">
+                    <label for="category">Categoria:</label>
+                    <input type="text" id="category" name="category" required>
+                </div>
+                <div class="form-group">
+                    <label for="skills">Habilidades (separadas por vírgula):</label>
+                    <textarea id="skills" name="skills" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="language">Idioma:</label>
+                    <select id="language" name="language" required>
+                        <option value="pt">🇧🇷 Português</option>
+                        <option value="en">🇺🇸 English</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+                    <button type="submit" class="btn">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal para Importar Dados -->
+    <div id="importModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Importar Dados</h2>
+                <span class="close" onclick="closeImportModal()">&times;</span>
+            </div>
+            <div class="form-group">
+                <label for="importFile">Selecionar arquivo JSON:</label>
+                <input type="file" id="importFile" accept=".json" onchange="handleFileImport()">
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeImportModal()">Cancelar</button>
+            </div>
+        </div>
+    </div>
+    
     <script>
+        // Dados das habilidades
+        let skillsData = {
+            pt: [
+                { id: 1, category: "Estratégia de Negócios", skills: "Análise de Mercado, Planejamento Estratégico, Desenvolvimento de Negócios, Inteligência Competitiva" },
+                { id: 2, category: "Liderança", skills: "Gestão de Equipes, Comunicação Intercultural, Tomada de Decisão, Gestão de Mudanças" },
+                { id: 3, category: "Tecnologia", skills: "Análise de Dados, Ferramentas de Gestão, Inovação Digital, Sistemas CRM" },
+                { id: 4, category: "Negócios Internacionais", skills: "Entrada em Mercados Globais, Comércio Internacional, Parcerias Transfronteiriças, Inteligência Cultural" },
+                { id: 5, category: "Finanças", skills: "Modelagem Financeira, Planejamento Orçamentário, Análise de Investimentos, Avaliação de Riscos" },
+                { id: 6, category: "Marketing", skills: "Marketing Digital, Estratégia de Marca, Marketing de Conteúdo, Mídias Sociais" },
+                { id: 7, category: "Operações", skills: "Otimização de Processos, Gestão da Cadeia de Suprimentos, Controle de Qualidade, Gestão de Projetos" },
+                { id: 8, category: "Vendas", skills: "Vendas B2B, Construção de Relacionamentos, Geração de Leads, Crescimento de Receita" },
+                { id: 9, category: "Idiomas", skills: "Inglês (Nativo), Português (Fluente), Espanhol (Fluente), Francês (Intermediário)" },
+                { id: 10, category: "Software", skills: "Microsoft Office, Salesforce, Tableau, Power BI, Google Analytics" }
+            ],
+            en: [
+                { id: 1, category: "Business Strategy", skills: "Market Analysis, Strategic Planning, Business Development, Competitive Intelligence" },
+                { id: 2, category: "Leadership", skills: "Team Management, Cross-cultural Communication, Decision Making, Change Management" },
+                { id: 3, category: "Technology", skills: "Data Analysis, Management Tools, Digital Innovation, CRM Systems" },
+                { id: 4, category: "International Business", skills: "Global Market Entry, International Trade, Cross-border Partnerships, Cultural Intelligence" },
+                { id: 5, category: "Finance", skills: "Financial Modeling, Budget Planning, Investment Analysis, Risk Assessment" },
+                { id: 6, category: "Marketing", skills: "Digital Marketing, Brand Strategy, Content Marketing, Social Media" },
+                { id: 7, category: "Operations", skills: "Process Optimization, Supply Chain Management, Quality Control, Project Management" },
+                { id: 8, category: "Sales", skills: "B2B Sales, Relationship Building, Lead Generation, Revenue Growth" },
+                { id: 9, category: "Languages", skills: "English (Native), Portuguese (Fluent), Spanish (Fluent), French (Intermediate)" },
+                { id: 10, category: "Software", skills: "Microsoft Office, Salesforce, Tableau, Power BI, Google Analytics" }
+            ],
+            es: [
+                { id: 1, category: "Estrategia de Negocios", skills: "Análisis de Mercado, Planificación Estratégica, Desarrollo de Negocios, Inteligencia Competitiva" },
+                { id: 2, category: "Liderazgo", skills: "Gestión de Equipos, Comunicación Intercultural, Toma de Decisiones, Gestión del Cambio" },
+                { id: 3, category: "Tecnología", skills: "Análisis de Datos, Herramientas de Gestión, Innovación Digital, Sistemas CRM" },
+                { id: 4, category: "Negocios Internacionales", skills: "Entrada a Mercados Globales, Comercio Internacional, Alianzas Transfronterizas, Inteligencia Cultural" },
+                { id: 5, category: "Finanzas", skills: "Modelado Financiero, Planificación Presupuestaria, Análisis de Inversiones, Evaluación de Riesgos" },
+                { id: 6, category: "Marketing", skills: "Marketing Digital, Estrategia de Marca, Marketing de Contenido, Redes Sociales" },
+                { id: 7, category: "Operaciones", skills: "Optimización de Procesos, Gestión de Cadena de Suministro, Control de Calidad, Gestión de Proyectos" },
+                { id: 8, category: "Ventas", skills: "Ventas B2B, Construcción de Relaciones, Generación de Leads, Crecimiento de Ingresos" },
+                { id: 9, category: "Idiomas", skills: "Inglés (Nativo), Portugués (Fluido), Español (Fluido), Francés (Intermedio)" },
+                { id: 10, category: "Software", skills: "Microsoft Office, Salesforce, Tableau, Power BI, Google Analytics" }
+            ]
+        };
+        
+        let currentEditId = null;
+        let currentLanguage = 'pt';
+        
         function showLanguage(lang) {
             // Hide all content
             document.querySelectorAll('.language-content').forEach(content => {
@@ -482,7 +745,176 @@
             
             // Add active to clicked tab
             event.target.classList.add('active');
+            
+            currentLanguage = lang;
+            renderTable();
         }
+        
+        function renderTable() {
+            const tbody = document.getElementById(currentLanguage + '-skills-tbody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            skillsData[currentLanguage].forEach(skill => {
+                const row = document.createElement('tr');
+                row.className = 'editable-row';
+                row.setAttribute('data-id', skill.id);
+                
+                row.innerHTML = `
+                    <td class="category">${skill.category}</td>
+                    <td class="skills-list">
+                        ${skill.skills}
+                        <div class="row-actions">
+                            <button class="btn btn-secondary" onclick="editSkill(${skill.id}, '${currentLanguage}')">✏️</button>
+                            <button class="btn btn-danger" onclick="deleteSkill(${skill.id})">🗑️</button>
+                        </div>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        function openAddModal() {
+            currentEditId = null;
+            document.getElementById('modalTitle').textContent = 'Adicionar Habilidade';
+            document.getElementById('skillForm').reset();
+            document.getElementById('language').value = currentLanguage;
+            document.getElementById('skillModal').style.display = 'block';
+        }
+        
+        function editSkill(id, lang) {
+            currentEditId = id;
+            const skill = skillsData[lang].find(s => s.id === id);
+            
+            if (skill) {
+                document.getElementById('modalTitle').textContent = 'Editar Habilidade';
+                document.getElementById('category').value = skill.category;
+                document.getElementById('skills').value = skill.skills;
+                document.getElementById('language').value = lang;
+                document.getElementById('skillModal').style.display = 'block';
+            }
+        }
+        
+        function deleteSkill(id) {
+            if (confirm('Tem certeza que deseja excluir esta habilidade?')) {
+                // Remove from all languages
+                Object.keys(skillsData).forEach(lang => {
+                    skillsData[lang] = skillsData[lang].filter(skill => skill.id !== id);
+                });
+                
+                renderTable();
+                saveToLocalStorage();
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('skillModal').style.display = 'none';
+        }
+        
+        function closeImportModal() {
+            document.getElementById('importModal').style.display = 'none';
+        }
+        
+        function exportData() {
+            const dataStr = JSON.stringify(skillsData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'habilidades_data.json';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        function importData() {
+            document.getElementById('importModal').style.display = 'block';
+        }
+        
+        function handleFileImport() {
+            const file = document.getElementById('importFile').files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const importedData = JSON.parse(e.target.result);
+                        skillsData = importedData;
+                        renderTable();
+                        saveToLocalStorage();
+                        alert('Dados importados com sucesso!');
+                        closeImportModal();
+                    } catch (error) {
+                        alert('Erro ao importar arquivo. Verifique se é um JSON válido.');
+                    }
+                };
+                reader.readAsText(file);
+            }
+        }
+        
+        function saveToLocalStorage() {
+            localStorage.setItem('skillsData', JSON.stringify(skillsData));
+        }
+        
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('skillsData');
+            if (saved) {
+                try {
+                    skillsData = JSON.parse(saved);
+                } catch (error) {
+                    console.error('Erro ao carregar dados salvos:', error);
+                }
+            }
+        }
+        
+        // Event listeners
+        document.getElementById('skillForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const category = document.getElementById('category').value;
+            const skills = document.getElementById('skills').value;
+            const language = document.getElementById('language').value;
+            
+            if (currentEditId) {
+                // Edit existing skill
+                const skill = skillsData[language].find(s => s.id === currentEditId);
+                if (skill) {
+                    skill.category = category;
+                    skill.skills = skills;
+                }
+            } else {
+                // Add new skill
+                const newId = Math.max(...Object.values(skillsData).flat().map(s => s.id)) + 1;
+                skillsData[language].push({
+                    id: newId,
+                    category: category,
+                    skills: skills
+                });
+            }
+            
+            renderTable();
+            saveToLocalStorage();
+            closeModal();
+        });
+        
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const skillModal = document.getElementById('skillModal');
+            const importModal = document.getElementById('importModal');
+            
+            if (event.target === skillModal) {
+                closeModal();
+            }
+            if (event.target === importModal) {
+                closeImportModal();
+            }
+        };
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFromLocalStorage();
+            renderTable();
+        });
     </script>
 </body>
 </html>
