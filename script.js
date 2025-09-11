@@ -3,6 +3,191 @@ let currentLanguage = 'pt'; // Padrão em português
 let cvData = {};
 let allLanguageData = {}; // Armazenar todos os dados de todos os idiomas
 
+// Translation API configuration
+const TRANSLATION_API = {
+    url: 'https://libretranslate.de/translate',
+    fallback: true // Use fallback translations if API fails
+};
+
+// Language mapping for translation API
+const LANGUAGE_CODES = {
+    'pt': 'pt',
+    'en': 'en', 
+    'es': 'es'
+};
+
+// Fallback translations (basic translations for common terms)
+const FALLBACK_TRANSLATIONS = {
+    'pt': {
+        'CEO & Fundador': 'CEO & Founder',
+        'Diretor de Estratégia': 'Strategy Director',
+        'Gerente de Desenvolvimento de Negócios': 'Business Development Manager',
+        'Consultor Internacional': 'International Consultant',
+        'Analista Sênior de Negócios': 'Senior Business Analyst',
+        'Gerente de Projetos': 'Project Manager',
+        'Consultor de Negócios': 'Business Consultant',
+        'Analista Júnior': 'Junior Analyst',
+        'Estratégia de Negócios': 'Business Strategy',
+        'Liderança': 'Leadership',
+        'Tecnologia': 'Technology',
+        'Negócios Internacionais': 'International Business',
+        'Finanças': 'Finance',
+        'Marketing': 'Marketing',
+        'Operações': 'Operations',
+        'Vendas': 'Sales',
+        'Idiomas': 'Languages',
+        'Software': 'Software',
+        'Expansão Internacional': 'International Expansion',
+        'Parcerias Estratégicas': 'Strategic Partnerships',
+        'Crescimento de Receita': 'Revenue Growth',
+        'Transformação Digital': 'Digital Transformation',
+        'Pesquisa de Mercado': 'Market Research',
+        'Formação de Equipes': 'Team Building',
+        'Estratégia de M&A': 'M&A Strategy',
+        'Otimização de Custos': 'Cost Optimization',
+        'Desenvolvimento de Marca': 'Brand Development',
+        'Integração Tecnológica': 'Technology Integration',
+        'Experiência do Cliente': 'Customer Experience',
+        'Iniciativa de Sustentabilidade': 'Sustainability Initiative',
+        'Inovação': 'Innovation',
+        'Resultados': 'Results'
+    },
+    'en': {
+        'CEO & Founder': 'CEO & Fundador',
+        'Strategy Director': 'Diretor de Estratégia',
+        'Business Development Manager': 'Gerente de Desenvolvimento de Negócios',
+        'International Consultant': 'Consultor Internacional',
+        'Senior Business Analyst': 'Analista Sênior de Negócios',
+        'Project Manager': 'Gerente de Projetos',
+        'Business Consultant': 'Consultor de Negócios',
+        'Junior Analyst': 'Analista Júnior',
+        'Business Strategy': 'Estratégia de Negócios',
+        'Leadership': 'Liderança',
+        'Technology': 'Tecnologia',
+        'International Business': 'Negócios Internacionais',
+        'Finance': 'Finanças',
+        'Marketing': 'Marketing',
+        'Operations': 'Operações',
+        'Sales': 'Vendas',
+        'Languages': 'Idiomas',
+        'Software': 'Software',
+        'International Expansion': 'Expansão Internacional',
+        'Strategic Partnerships': 'Parcerias Estratégicas',
+        'Revenue Growth': 'Crescimento de Receita',
+        'Digital Transformation': 'Transformação Digital',
+        'Market Research': 'Pesquisa de Mercado',
+        'Team Building': 'Formação de Equipes',
+        'M&A Strategy': 'Estratégia de M&A',
+        'Cost Optimization': 'Otimização de Custos',
+        'Brand Development': 'Desenvolvimento de Marca',
+        'Technology Integration': 'Integração Tecnológica',
+        'Customer Experience': 'Experiência do Cliente',
+        'Sustainability Initiative': 'Iniciativa de Sustentabilidade',
+        'Innovation': 'Inovação',
+        'Results': 'Resultados'
+    },
+    'es': {
+        'CEO & Fundador': 'CEO y Fundador',
+        'Diretor de Estratégia': 'Director de Estrategia',
+        'Gerente de Desenvolvimento de Negócios': 'Gerente de Desarrollo de Negocios',
+        'Consultor Internacional': 'Consultor Internacional',
+        'Analista Sênior de Negócios': 'Analista Senior de Negocios',
+        'Gerente de Projetos': 'Gerente de Proyectos',
+        'Consultor de Negócios': 'Consultor de Negocios',
+        'Analista Júnior': 'Analista Junior',
+        'Estratégia de Negócios': 'Estrategia de Negocios',
+        'Liderança': 'Liderazgo',
+        'Tecnologia': 'Tecnología',
+        'Negócios Internacionais': 'Negocios Internacionales',
+        'Finanças': 'Finanzas',
+        'Marketing': 'Marketing',
+        'Operações': 'Operaciones',
+        'Vendas': 'Ventas',
+        'Idiomas': 'Idiomas',
+        'Software': 'Software',
+        'Expansão Internacional': 'Expansión Internacional',
+        'Parcerias Estratégicas': 'Alianzas Estratégicas',
+        'Crescimento de Receita': 'Crecimiento de Ingresos',
+        'Transformação Digital': 'Transformación Digital',
+        'Pesquisa de Mercado': 'Investigación de Mercado',
+        'Formação de Equipes': 'Formación de Equipos',
+        'Estratégia de M&A': 'Estrategia de M&A',
+        'Otimização de Custos': 'Optimización de Costos',
+        'Desenvolvimento de Marca': 'Desarrollo de Marca',
+        'Integração Tecnológica': 'Integración Tecnológica',
+        'Experiência do Cliente': 'Experiencia del Cliente',
+        'Iniciativa de Sustentabilidade': 'Iniciativa de Sostenibilidad',
+        'Inovação': 'Innovación',
+        'Resultados': 'Resultados'
+    }
+};
+
+// Translation functions
+async function translateText(text, fromLang, toLang) {
+    if (!text || text.trim() === '') return text;
+    
+    // Check if we have a fallback translation
+    const fallbackKey = `${fromLang}_${toLang}`;
+    if (FALLBACK_TRANSLATIONS[fromLang] && FALLBACK_TRANSLATIONS[fromLang][text]) {
+        return FALLBACK_TRANSLATIONS[fromLang][text];
+    }
+    
+    try {
+        const response = await fetch(TRANSLATION_API.url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                q: text,
+                source: LANGUAGE_CODES[fromLang],
+                target: LANGUAGE_CODES[toLang],
+                format: 'text'
+            })
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            return data.translatedText || text;
+        } else {
+            console.warn('Translation API failed, using fallback');
+            return text; // Return original text if translation fails
+        }
+    } catch (error) {
+        console.warn('Translation error:', error);
+        return text; // Return original text if translation fails
+    }
+}
+
+async function translateObject(obj, fromLang, toLang) {
+    if (!obj || typeof obj !== 'object') return obj;
+    
+    const translated = {};
+    
+    for (const [key, value] of Object.entries(obj)) {
+        if (Array.isArray(value)) {
+            // Handle arrays (like experience, skills, portfolio)
+            translated[key] = await Promise.all(value.map(async (item) => {
+                if (typeof item === 'object') {
+                    return await translateObject(item, fromLang, toLang);
+                }
+                return await translateText(item, fromLang, toLang);
+            }));
+        } else if (typeof value === 'object' && value !== null) {
+            // Handle nested objects
+            translated[key] = await translateObject(value, fromLang, toLang);
+        } else if (typeof value === 'string') {
+            // Handle strings
+            translated[key] = await translateText(value, fromLang, toLang);
+        } else {
+            // Handle other types (numbers, booleans, etc.)
+            translated[key] = value;
+        }
+    }
+    
+    return translated;
+}
+
 // Scroll control variables
 let scrollState = {
     experience: { current: 0, itemsPerPage: 4, total: 0 },
@@ -563,9 +748,72 @@ function loadFallbackData() {
 
 async function saveCVData(data) {
     try {
-        // Atualizar dados na memória
+        console.log('Saving data for language:', currentLanguage);
+        
+        // Atualizar dados na memória para o idioma atual
         allLanguageData[currentLanguage] = data;
         cvData = data;
+        
+        // Traduzir automaticamente para os outros idiomas
+        const otherLanguages = ['pt', 'en', 'es'].filter(lang => lang !== currentLanguage);
+        
+        console.log('Translating to other languages:', otherLanguages);
+        
+        // Mostrar loading
+        const saveButton = document.querySelector('#editForm button[type="submit"]');
+        if (saveButton) {
+            saveButton.disabled = true;
+            saveButton.textContent = 'Traduzindo e salvando...';
+        }
+        
+        // Criar indicador de progresso
+        const progressDiv = document.createElement('div');
+        progressDiv.id = 'translation-progress';
+        progressDiv.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(26, 11, 46, 0.95);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #ff6b35;
+            z-index: 10000;
+            text-align: center;
+        `;
+        progressDiv.innerHTML = `
+            <h3>Traduzindo dados...</h3>
+            <p>Por favor, aguarde enquanto traduzimos para os outros idiomas.</p>
+            <div id="progress-bar" style="width: 100%; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 10px 0;">
+                <div id="progress-fill" style="width: 0%; height: 100%; background: #ff6b35; border-radius: 2px; transition: width 0.3s ease;"></div>
+            </div>
+        `;
+        document.body.appendChild(progressDiv);
+        
+        // Traduzir para cada idioma
+        for (let i = 0; i < otherLanguages.length; i++) {
+            const targetLang = otherLanguages[i];
+            try {
+                console.log(`Translating to ${targetLang}...`);
+                
+                // Atualizar progresso
+                const progressFill = document.getElementById('progress-fill');
+                if (progressFill) {
+                    progressFill.style.width = `${((i + 1) / otherLanguages.length) * 100}%`;
+                }
+                
+                const translatedData = await translateObject(data, currentLanguage, targetLang);
+                allLanguageData[targetLang] = translatedData;
+                console.log(`Translation to ${targetLang} completed`);
+            } catch (error) {
+                console.error(`Error translating to ${targetLang}:`, error);
+                // Keep existing data for this language if translation fails
+                if (!allLanguageData[targetLang]) {
+                    allLanguageData[targetLang] = data; // Use original data as fallback
+                }
+            }
+        }
         
         // Salvar no localStorage como backup
         localStorage.setItem('cvData', JSON.stringify(allLanguageData));
@@ -573,11 +821,36 @@ async function saveCVData(data) {
         // Atualizar a interface
         updatePageContent();
         
-        alert('Dados salvos com sucesso!');
-        console.log('Data saved for language:', currentLanguage, data);
+        // Remover indicador de progresso
+        const progressDiv = document.getElementById('translation-progress');
+        if (progressDiv) {
+            progressDiv.remove();
+        }
+        
+        // Restaurar botão
+        if (saveButton) {
+            saveButton.disabled = false;
+            saveButton.textContent = 'Salvar Alterações';
+        }
+        
+        alert('Dados salvos e traduzidos com sucesso!');
+        console.log('All data saved and translated:', allLanguageData);
     } catch (error) {
         console.error('Error saving CV data:', error);
         alert('Erro ao salvar dados');
+        
+        // Remover indicador de progresso em caso de erro
+        const progressDiv = document.getElementById('translation-progress');
+        if (progressDiv) {
+            progressDiv.remove();
+        }
+        
+        // Restaurar botão em caso de erro
+        const saveButton = document.querySelector('#editForm button[type="submit"]');
+        if (saveButton) {
+            saveButton.disabled = false;
+            saveButton.textContent = 'Salvar Alterações';
+        }
     }
 }
 
