@@ -1,0 +1,13 @@
+{
+  "name": "fabio-cv-portfolio",
+  "version": "1.0.0",
+  "description": "Portfolio website for Fabio Bittencourt Daniel",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Static site - no build needed'",
+    "start": "echo 'Static site - no start needed'"
+  },
+  "keywords": ["portfolio", "cv", "resume", "static"],
+  "author": "Fabio Bittencourt Daniel",
+  "license": "MIT"
+}

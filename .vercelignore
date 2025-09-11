@@ -1,0 +1,8 @@
+# Ignore only test and debug files
+debug*.html
+test_*.html
+clear_cache.html
+*.sql
+README.md
+SETUP_SERVIDOR.md
+api/
