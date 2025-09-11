@@ -257,7 +257,13 @@ const interfaceTranslations = {
         'edit.contact.phone': 'Telefone',
         'edit.contact.location': 'Localização',
         'edit.cancel': 'Cancelar',
-        'edit.save': 'Salvar Alterações'
+        'edit.save': 'Salvar Alterações',
+        'cards.innovation.title': 'Inovação',
+        'cards.innovation.desc': 'Sempre à frente das tendências',
+        'cards.leadership.title': 'Liderança',
+        'cards.leadership.desc': 'Gestão de equipes de alta performance',
+        'cards.results.title': 'Resultados',
+        'cards.results.desc': 'Foco em entregas de valor'
     },
     en: {
         'nav.home': 'Home',
@@ -318,7 +324,13 @@ const interfaceTranslations = {
         'edit.contact.phone': 'Phone',
         'edit.contact.location': 'Location',
         'edit.cancel': 'Cancel',
-        'edit.save': 'Save Changes'
+        'edit.save': 'Save Changes',
+        'cards.innovation.title': 'Innovation',
+        'cards.innovation.desc': 'Always ahead of trends',
+        'cards.leadership.title': 'Leadership',
+        'cards.leadership.desc': 'High-performance team management',
+        'cards.results.title': 'Results',
+        'cards.results.desc': 'Focus on value delivery'
     },
     es: {
         'nav.home': 'Inicio',
@@ -379,7 +391,13 @@ const interfaceTranslations = {
         'edit.contact.phone': 'Teléfono',
         'edit.contact.location': 'Ubicación',
         'edit.cancel': 'Cancelar',
-        'edit.save': 'Guardar Cambios'
+        'edit.save': 'Guardar Cambios',
+        'cards.innovation.title': 'Innovación',
+        'cards.innovation.desc': 'Siempre a la vanguardia de las tendencias',
+        'cards.leadership.title': 'Liderazgo',
+        'cards.leadership.desc': 'Gestión de equipos de alto rendimiento',
+        'cards.results.title': 'Resultados',
+        'cards.results.desc': 'Enfoque en la entrega de valor'
     }
 };
 
