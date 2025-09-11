@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabio Bittencourt Daniel - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Fabio Bittencourt Daniel</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#inicio">Início</a></li>
+                    <li><a href="#sobre">Sobre</a></li>
+                    <li><a href="#experiencia">Experiência</a></li>
+                    <li><a href="#habilidades">Habilidades</a></li>
+                    <li><a href="#portfolio">Portfólio</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                    <li><a href="#" id="editModeBtn" class="edit-btn"><i class="fas fa-edit"></i> Editar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="content-grid">
+                <!-- Left Section -->
+                <div class="left-section">
+                    <div class="hero">
+                        <h1 class="name">Fabio Bittencourt Daniel</h1>
+                        <h2 class="title">Estrategista de Negócios Globais & Desenvolvimento Empresarial</h2>
+                        <p class="description">
+                            Ao longo da minha trajetória em Estratégia de Negócios Globais, desenvolvi habilidades essenciais para liderar transformações empresariais, construir parcerias estratégicas e entender as necessidades do mercado internacional.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Section - Feature Cards -->
+                <div class="right-section">
+                    <div class="cards-grid">
+                        <div class="card">
+                            <div class="card-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h3>Inovação</h3>
+                            <p>Sempre à frente das tendências</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>Liderança</h3>
+                            <p>Gestão de equipes de alta performance</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3>Resultados</h3>
+                            <p>Foco em entregas de valor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Experience Section -->
+    <section id="experiencia" class="section">
+        <div class="container">
+            <h2>Experiência Profissional</h2>
+            <div class="timeline-container">
+                <div class="timeline">
+                    <!-- Timeline items will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="habilidades" class="section">
+        <div class="container">
+            <h2>Habilidades</h2>
+            <div class="skills-container">
+                <div class="skills-grid">
+                    <!-- Skill categories will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section">
+        <div class="container">
+            <h2>Portfólio</h2>
+            <div class="portfolio-container">
+                <div class="portfolio-grid">
+                    <!-- Portfolio items will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content edit-modal">
+            <span class="close">&times;</span>
+            <h2>Editar Dados do CV</h2>
+            <p>Modal de edição funcionando!</p>
+        </div>
+    </div>
+
+    <script src="data_embedded.js"></script>
+    <script src="script_simple.js"></script>
+</body>
+</html>

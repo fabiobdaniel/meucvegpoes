@@ -891,9 +891,9 @@ async function saveCVData(data) {
         updatePageContent();
         
         // Remover indicador de progresso
-        const progressDiv = document.getElementById('translation-progress');
-        if (progressDiv) {
-            progressDiv.remove();
+        const progressDivSuccess = document.getElementById('translation-progress');
+        if (progressDivSuccess) {
+            progressDivSuccess.remove();
         }
         
         // Restaurar botão
@@ -909,9 +909,9 @@ async function saveCVData(data) {
         alert('Erro ao salvar dados');
         
         // Remover indicador de progresso em caso de erro
-        const progressDiv = document.getElementById('translation-progress');
-        if (progressDiv) {
-            progressDiv.remove();
+        const progressDivError = document.getElementById('translation-progress');
+        if (progressDivError) {
+            progressDivError.remove();
         }
         
         // Restaurar botão em caso de erro

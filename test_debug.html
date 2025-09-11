@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>Debug Test</h1>
+    <div id="debug-info"></div>
+    
+    <script src="data_embedded.js"></script>
+    <script>
+        console.log('=== DEBUG TEST START ===');
+        console.log('EMBEDDED_CV_DATA available:', typeof EMBEDDED_CV_DATA !== 'undefined');
+        
+        if (typeof EMBEDDED_CV_DATA !== 'undefined') {
+            console.log('EMBEDDED_CV_DATA keys:', Object.keys(EMBEDDED_CV_DATA));
+            console.log('Portuguese data available:', !!EMBEDDED_CV_DATA['pt']);
+            console.log('Experience data:', EMBEDDED_CV_DATA['pt'].experience);
+            console.log('Skills data:', EMBEDDED_CV_DATA['pt'].skills);
+            console.log('Portfolio data:', EMBEDDED_CV_DATA['pt'].portfolio);
+            
+            // Display on page
+            document.getElementById('debug-info').innerHTML = `
+                <p>Data loaded: ${typeof EMBEDDED_CV_DATA !== 'undefined'}</p>
+                <p>Experience items: ${EMBEDDED_CV_DATA['pt'].experience.length}</p>
+                <p>Skills categories: ${EMBEDDED_CV_DATA['pt'].skills.length}</p>
+                <p>Portfolio items: ${EMBEDDED_CV_DATA['pt'].portfolio.length}</p>
+            `;
+        } else {
+            console.error('EMBEDDED_CV_DATA not available!');
+            document.getElementById('debug-info').innerHTML = '<p>ERROR: Data not loaded!</p>';
+        }
+    </script>
+</body>
+</html>
