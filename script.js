@@ -386,6 +386,29 @@ const interfaceTranslations = {
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM loaded, initializing app...');
+    
+    // Simple approach - load data immediately
+    if (typeof EMBEDDED_CV_DATA !== 'undefined') {
+        allLanguageData = EMBEDDED_CV_DATA;
+        cvData = allLanguageData['pt'];
+        console.log('Data loaded immediately:', cvData);
+        updatePageContent();
+        applyInterfaceTranslations();
+    }
+    
+    // Setup edit button with simple approach
+    setTimeout(() => {
+        const editBtn = document.getElementById('editModeBtn');
+        if (editBtn) {
+            editBtn.onclick = function(e) {
+                e.preventDefault();
+                console.log('Edit clicked!');
+                document.getElementById('editModal').style.display = 'block';
+            };
+            console.log('Edit button setup complete');
+        }
+    }, 1000);
+    
     initializeApp();
 });
 
@@ -899,9 +922,13 @@ function saveToLocalStorage(data) {
 
 // Update page content with CV data
 function updatePageContent() {
-    console.log('Updating page content with data:', cvData);
+    console.log('=== UPDATING PAGE CONTENT ===');
+    console.log('CV Data available:', !!cvData);
+    console.log('CV Data keys:', cvData ? Object.keys(cvData) : 'No data');
+    
     if (!cvData) {
-        console.log('No CV data available');
+        console.log('No CV data available, loading fallback...');
+        loadFallbackData();
         return;
     }
 
@@ -921,82 +948,107 @@ function updatePageContent() {
     updateElement('.stat:nth-child(3) h3', cvData.about?.stats_years);
     updateElement('.stat:nth-child(3) p', cvData.about?.stats_years_label);
 
-    // Experience section - trabalhar com arrays dinamicamente
+    // Experience section - SIMPLIFIED
+    console.log('=== UPDATING EXPERIENCE ===');
+    console.log('Experience data:', cvData.experience);
+    
     if (cvData.experience && Array.isArray(cvData.experience)) {
-        console.log('=== UPDATING EXPERIENCE ===');
-        console.log('Experience data:', cvData.experience);
         console.log('Number of experiences:', cvData.experience.length);
-        
-        // Update scroll state
-        scrollState.experience.total = cvData.experience.length;
-        scrollState.experience.current = 0; // Reset to first page
         
         const timelineContainer = document.querySelector('.timeline');
         if (timelineContainer) {
-            console.log('Timeline container found, clearing content...');
-            // Limpar conteúdo existente
+            console.log('Timeline container found, updating content...');
             timelineContainer.innerHTML = '';
             
-            // Show paginated experiences
-            updateExperienceDisplay();
-            updateScrollControls('experience');
+            // Add experiences directly
+            cvData.experience.forEach((exp, index) => {
+                const timelineItem = document.createElement('div');
+                timelineItem.className = 'timeline-item';
+                timelineItem.innerHTML = `
+                    <div class="timeline-content">
+                        <h3>${exp.title || ''}</h3>
+                        <h4>${exp.company || ''}</h4>
+                        <span class="date">${exp.period || ''}</span>
+                        <p>${exp.description || ''}</p>
+                    </div>
+                `;
+                timelineContainer.appendChild(timelineItem);
+            });
+            
+            console.log('Experience items added:', cvData.experience.length);
         } else {
             console.error('Timeline container not found!');
         }
     } else {
-        console.log('No experience data or not an array:', cvData.experience);
+        console.log('No experience data available');
     }
 
-    // Skills section - trabalhar com arrays dinamicamente
+    // Skills section - SIMPLIFIED
+    console.log('=== UPDATING SKILLS ===');
+    console.log('Skills data:', cvData.skills);
+    
     if (cvData.skills && Array.isArray(cvData.skills)) {
-        console.log('=== UPDATING SKILLS ===');
-        console.log('Skills data:', cvData.skills);
         console.log('Number of skill categories:', cvData.skills.length);
-        
-        // Update scroll state
-        scrollState.skills.total = cvData.skills.length;
-        scrollState.skills.current = 0; // Reset to first page
         
         const skillsContainer = document.querySelector('.skills-grid');
         if (skillsContainer) {
-            console.log('Skills container found, clearing content...');
-            // Limpar conteúdo existente
+            console.log('Skills container found, updating content...');
             skillsContainer.innerHTML = '';
             
-            // Show paginated skills
-            updateSkillsDisplay();
-            updateScrollControls('skills');
+            // Add skills directly
+            cvData.skills.forEach((skill, index) => {
+                const skillCategory = document.createElement('div');
+                skillCategory.className = 'skill-category';
+                
+                const skillsList = skill.skills_list ? 
+                    skill.skills_list.split(',').map(item => item.trim()).filter(item => item) : [];
+                
+                skillCategory.innerHTML = `
+                    <h3>${skill.category_title || ''}</h3>
+                    <div class="skill-items">
+                        ${skillsList.map(skillItem => `<span class="skill-tag">${skillItem}</span>`).join('')}
+                    </div>
+                `;
+                skillsContainer.appendChild(skillCategory);
+            });
+            
+            console.log('Skill categories added:', cvData.skills.length);
         } else {
             console.error('Skills container not found!');
         }
     } else {
-        console.log('No skills data or not an array:', cvData.skills);
+        console.log('No skills data available');
     }
 
-    // Portfolio section - trabalhar com arrays dinamicamente
+    // Portfolio section - SIMPLIFIED
+    console.log('=== UPDATING PORTFOLIO ===');
+    console.log('Portfolio data:', cvData.portfolio);
+    
     if (cvData.portfolio && Array.isArray(cvData.portfolio)) {
-        console.log('=== UPDATING PORTFOLIO ===');
-        console.log('Portfolio data:', cvData.portfolio);
         console.log('Number of portfolio items:', cvData.portfolio.length);
-        
-        // Update scroll state
-        scrollState.portfolio.total = cvData.portfolio.length;
-        scrollState.portfolio.current = 0; // Reset to first page
         
         const portfolioContainer = document.querySelector('.portfolio-grid');
         if (portfolioContainer) {
-            console.log('Portfolio container found, clearing content...');
-            // Limpar conteúdo existente
+            console.log('Portfolio container found, updating content...');
             portfolioContainer.innerHTML = '';
             
-            // Show paginated portfolio
-            updatePortfolioDisplay();
-            updateScrollControls('portfolio');
+            // Add portfolio items directly
+            cvData.portfolio.forEach((project, index) => {
+                const portfolioItem = document.createElement('div');
+                portfolioItem.className = 'portfolio-item';
+                portfolioItem.innerHTML = `
+                    <h3>${project.title || ''}</h3>
+                    <p>${project.description || ''}</p>
+                `;
+                portfolioContainer.appendChild(portfolioItem);
+            });
+            
+            console.log('Portfolio items added:', cvData.portfolio.length);
         } else {
             console.error('Portfolio container not found!');
         }
     } else {
-        console.log('No portfolio data or not an array:', cvData.portfolio);
+        console.log('No portfolio data available');
     }
 
     // Contact section
