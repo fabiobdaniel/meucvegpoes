@@ -263,7 +263,10 @@ const interfaceTranslations = {
         'cards.leadership.title': 'Liderança',
         'cards.leadership.desc': 'Gestão de equipes de alta performance',
         'cards.results.title': 'Resultados',
-        'cards.results.desc': 'Foco em entregas de valor'
+        'cards.results.desc': 'Foco em entregas de valor',
+        'contact.sending': 'Enviando...',
+        'contact.success': 'Mensagem enviada com sucesso! Entraremos em contato em breve.',
+        'contact.error': 'Erro ao enviar mensagem. Tente novamente ou entre em contato diretamente.'
     },
     en: {
         'nav.home': 'Home',
@@ -330,7 +333,10 @@ const interfaceTranslations = {
         'cards.leadership.title': 'Leadership',
         'cards.leadership.desc': 'High-performance team management',
         'cards.results.title': 'Results',
-        'cards.results.desc': 'Focus on value delivery'
+        'cards.results.desc': 'Focus on value delivery',
+        'contact.sending': 'Sending...',
+        'contact.success': 'Message sent successfully! We will contact you soon.',
+        'contact.error': 'Error sending message. Please try again or contact us directly.'
     },
     es: {
         'nav.home': 'Inicio',
@@ -397,7 +403,10 @@ const interfaceTranslations = {
         'cards.leadership.title': 'Liderazgo',
         'cards.leadership.desc': 'Gestión de equipos de alto rendimiento',
         'cards.results.title': 'Resultados',
-        'cards.results.desc': 'Enfoque en la entrega de valor'
+        'cards.results.desc': 'Enfoque en la entrega de valor',
+        'contact.sending': 'Enviando...',
+        'contact.success': '¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.',
+        'contact.error': 'Error al enviar mensaje. Inténtalo de nuevo o contáctanos directamente.'
     }
 };
 
@@ -542,8 +551,7 @@ function setupEventListeners() {
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
             console.log('Contact form submitted');
-            alert('Mensagem enviada com sucesso!');
-            this.reset();
+            handleContactFormSubmit(this);
         });
     } else {
         console.error('Contact form not found!');
@@ -1736,3 +1744,95 @@ function updatePortfolioDisplay() {
         portfolioContainer.appendChild(portfolioItem);
     }
 }
+
+// Contact form handling
+async function handleContactFormSubmit(form) {
+    const submitButton = document.getElementById('contactSubmit');
+    const statusDiv = document.getElementById('contactStatus');
+    
+    // Get form data
+    const formData = new FormData(form);
+    const name = formData.get('name');
+    const email = formData.get('email');
+    const message = formData.get('message');
+    
+    console.log('Form data:', { name, email, message });
+    
+    // Show loading state
+    submitButton.disabled = true;
+    submitButton.textContent = interfaceTranslations[currentLanguage]['contact.sending'] || 'Enviando...';
+    statusDiv.style.display = 'block';
+    statusDiv.style.backgroundColor = '#ff6b35';
+    statusDiv.style.color = 'white';
+    statusDiv.textContent = interfaceTranslations[currentLanguage]['contact.sending'] || 'Enviando mensagem...';
+    
+    try {
+        // Simulate sending email (replace with real email service)
+        await simulateEmailSend({ name, email, message });
+        
+        // Success
+        statusDiv.style.backgroundColor = '#4CAF50';
+        statusDiv.textContent = interfaceTranslations[currentLanguage]['contact.success'] || 'Mensagem enviada com sucesso!';
+        form.reset();
+        
+        console.log('Email sent successfully');
+        
+    } catch (error) {
+        console.error('Error sending email:', error);
+        
+        // Error
+        statusDiv.style.backgroundColor = '#f44336';
+        statusDiv.textContent = interfaceTranslations[currentLanguage]['contact.error'] || 'Erro ao enviar mensagem.';
+    } finally {
+        // Reset button
+        submitButton.disabled = false;
+        submitButton.textContent = interfaceTranslations[currentLanguage]['contact.send'] || 'Enviar Mensagem';
+        
+        // Hide status after 5 seconds
+        setTimeout(() => {
+            statusDiv.style.display = 'none';
+        }, 5000);
+    }
+}
+
+// Simulate email sending (replace with real service like EmailJS, SendGrid, etc.)
+async function simulateEmailSend(data) {
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // For demo purposes, we'll always succeed
+    // In production, replace this with actual email service
+    console.log('Simulated email send:', data);
+    
+    // You can integrate with services like:
+    // - EmailJS: https://www.emailjs.com/
+    // - SendGrid: https://sendgrid.com/
+    // - Nodemailer with your backend
+    // - Formspree: https://formspree.io/
+    
+    return true;
+}
+
+// Real email sending function (uncomment and configure when ready)
+/*
+async function sendRealEmail(data) {
+    // EmailJS configuration
+    emailjs.init('YOUR_PUBLIC_KEY'); // Replace with your EmailJS public key
+    
+    const templateParams = {
+        from_name: data.name,
+        from_email: data.email,
+        message: data.message,
+        to_email: 'fabio@fbdglobal.com' // Your email
+    };
+    
+    try {
+        const response = await emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams);
+        console.log('Email sent successfully:', response);
+        return response;
+    } catch (error) {
+        console.error('EmailJS error:', error);
+        throw error;
+    }
+}
+*/

@@ -209,11 +209,12 @@
                 </div>
                 <div class="contact-form">
                     <form id="contactForm">
-                        <input type="text" placeholder="Nome" required>
-                        <input type="email" placeholder="Email" required>
-                        <textarea placeholder="Mensagem" rows="5" required></textarea>
-                        <button type="submit" data-translate="contact.send">Enviar Mensagem</button>
+                        <input type="text" id="contactName" name="name" placeholder="Nome" required>
+                        <input type="email" id="contactEmail" name="email" placeholder="Email" required>
+                        <textarea id="contactMessage" name="message" placeholder="Mensagem" rows="5" required></textarea>
+                        <button type="submit" id="contactSubmit" data-translate="contact.send">Enviar Mensagem</button>
                     </form>
+                    <div id="contactStatus" style="display: none; margin-top: 10px; padding: 10px; border-radius: 5px;"></div>
                 </div>
             </div>
         </div>
@@ -349,6 +350,8 @@
         </div>
     </div>
 
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="data_embedded.js"></script>
     <script src="script.js"></script>
 </body>
