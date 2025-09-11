@@ -404,6 +404,9 @@ function initializeApp() {
         console.log('Force updating page content...');
         if (cvData && Object.keys(cvData).length > 0) {
             updatePageContent();
+        } else {
+            console.log('No CV data available, loading fallback...');
+            loadFallbackData();
         }
     }, 1000);
 }
@@ -435,7 +438,8 @@ function setupEventListeners() {
     // Edit button
     const editModeBtn = document.getElementById('editModeBtn');
     if (editModeBtn) {
-        editModeBtn.addEventListener('click', function() {
+        editModeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
             console.log('Edit button clicked');
             openEditModal();
         });
@@ -976,36 +980,42 @@ function updatePageContent() {
     if (cvData.cards && Array.isArray(cvData.cards)) {
         const cardsContainer = document.querySelector('.cards-grid');
         if (cardsContainer) {
-            console.log('Rendering cards:', cvData.cards);
-            // Limpar conteúdo existente
-            cardsContainer.innerHTML = '';
-            
-            // Criar elementos dinamicamente para cada card
-            cvData.cards.forEach((card, index) => {
-                const cardElement = document.createElement('div');
-                cardElement.className = 'card';
+            // Verificar se já existem cards estáticos
+            const existingCards = cardsContainer.querySelectorAll('.card');
+            if (existingCards.length === 0) {
+                console.log('Rendering cards dynamically:', cvData.cards);
+                // Limpar conteúdo existente
+                cardsContainer.innerHTML = '';
                 
-                // Definir ícones para cada card baseado no título
-                let iconClass = 'fas fa-rocket'; // padrão
-                if (card.title) {
-                    if (card.title.toLowerCase().includes('inovação') || card.title.toLowerCase().includes('innovation') || card.title.toLowerCase().includes('innovación')) {
-                        iconClass = 'fas fa-rocket';
-                    } else if (card.title.toLowerCase().includes('liderança') || card.title.toLowerCase().includes('leadership') || card.title.toLowerCase().includes('liderazgo')) {
-                        iconClass = 'fas fa-users';
-                    } else if (card.title.toLowerCase().includes('resultados') || card.title.toLowerCase().includes('results') || card.title.toLowerCase().includes('resultados')) {
-                        iconClass = 'fas fa-chart-line';
+                // Criar elementos dinamicamente para cada card
+                cvData.cards.forEach((card, index) => {
+                    const cardElement = document.createElement('div');
+                    cardElement.className = 'card';
+                    
+                    // Definir ícones para cada card baseado no título
+                    let iconClass = 'fas fa-rocket'; // padrão
+                    if (card.title) {
+                        if (card.title.toLowerCase().includes('inovação') || card.title.toLowerCase().includes('innovation') || card.title.toLowerCase().includes('innovación')) {
+                            iconClass = 'fas fa-rocket';
+                        } else if (card.title.toLowerCase().includes('liderança') || card.title.toLowerCase().includes('leadership') || card.title.toLowerCase().includes('liderazgo')) {
+                            iconClass = 'fas fa-users';
+                        } else if (card.title.toLowerCase().includes('resultados') || card.title.toLowerCase().includes('results') || card.title.toLowerCase().includes('resultados')) {
+                            iconClass = 'fas fa-chart-line';
+                        }
                     }
-                }
-                
-                cardElement.innerHTML = `
-                    <div class="card-icon">
-                        <i class="${iconClass}"></i>
-                    </div>
-                    <h3>${card.title || ''}</h3>
-                    <p>${card.description || ''}</p>
-                `;
-                cardsContainer.appendChild(cardElement);
-            });
+                    
+                    cardElement.innerHTML = `
+                        <div class="card-icon">
+                            <i class="${iconClass}"></i>
+                        </div>
+                        <h3>${card.title || ''}</h3>
+                        <p>${card.description || ''}</p>
+                    `;
+                    cardsContainer.appendChild(cardElement);
+                });
+            } else {
+                console.log('Cards already exist, skipping dynamic rendering');
+            }
         } else {
             console.error('Cards container not found!');
         }
