@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug API</title>
+</head>
+<body>
+    <h1>Debug API</h1>
+    <div id="output"></div>
+    
+    <script>
+        async function testAPI() {
+            const output = document.getElementById('output');
+            
+            try {
+                output.innerHTML = 'Testing API...<br>';
+                
+                const response = await fetch('api/simple.php?action=get_data&lang=en');
+                output.innerHTML += 'Response status: ' + response.status + '<br>';
+                
+                const result = await response.json();
+                output.innerHTML += 'Result: <pre>' + JSON.stringify(result, null, 2) + '</pre>';
+                
+            } catch (error) {
+                output.innerHTML += 'Error: ' + error.message + '<br>';
+            }
+        }
+        
+        testAPI();
+    </script>
+</body>
+</html>

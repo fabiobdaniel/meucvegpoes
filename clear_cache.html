@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Limpar Cache</title>
+</head>
+<body>
+    <h1>Limpando Cache e Carregando Dados Normalizados</h1>
+    <div id="status"></div>
+    
+    <script>
+        // Limpar localStorage
+        localStorage.removeItem('cvData');
+        document.getElementById('status').innerHTML = 'Cache limpo!<br>';
+        
+        // Testar carregamento do arquivo normalizado
+        fetch('data/cv_data_normalized.json?v=' + Date.now())
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').innerHTML += 'Dados normalizados carregados com sucesso!<br>';
+                document.getElementById('status').innerHTML += `Experiências: ${data.en.experience.length}<br>`;
+                document.getElementById('status').innerHTML += `Habilidades: ${data.en.skills.length}<br>`;
+                document.getElementById('status').innerHTML += `Portfólio: ${data.en.portfolio.length}<br>`;
+                document.getElementById('status').innerHTML += `Cards: ${data.en.cards.length}<br>`;
+                document.getElementById('status').innerHTML += '<br><a href="index.html">Ir para o site principal</a>';
+            })
+            .catch(error => {
+                document.getElementById('status').innerHTML += 'Erro: ' + error.message;
+            });
+    </script>
+</body>
+</html>

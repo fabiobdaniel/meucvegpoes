@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Test - Array Data</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #1a0b2e; color: white; }
+        .section { margin: 20px 0; padding: 20px; background: rgba(255,255,255,0.1); border-radius: 10px; }
+        .item { margin: 10px 0; padding: 10px; background: rgba(255,107,53,0.2); border-radius: 5px; }
+        .debug { background: #333; padding: 10px; margin: 10px 0; border-radius: 5px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <h1>Debug Test - Verificar Arrays</h1>
+    
+    <div class="section">
+        <h2>Experiências (deveria ter 4)</h2>
+        <div id="experience-debug" class="debug">Carregando...</div>
+        <div id="experience-list"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Habilidades (deveria ter 5)</h2>
+        <div id="skills-debug" class="debug">Carregando...</div>
+        <div id="skills-list"></div>
+    </div>
+    
+    <div class="section">
+        <h2>Portfólio (deveria ter 6)</h2>
+        <div id="portfolio-debug" class="debug">Carregando...</div>
+        <div id="portfolio-list"></div>
+    </div>
+
+    <script src="data_embedded.js"></script>
+    <script>
+        console.log('=== DEBUG TEST STARTING ===');
+        
+        // Testar dados embutidos
+        console.log('Embedded data available:', typeof EMBEDDED_CV_DATA);
+        console.log('English data:', EMBEDDED_CV_DATA.en);
+        
+        const testData = EMBEDDED_CV_DATA.en;
+        
+        // Testar Experiências
+        console.log('=== TESTING EXPERIENCE ===');
+        console.log('Experience data:', testData.experience);
+        console.log('Is array:', Array.isArray(testData.experience));
+        console.log('Length:', testData.experience ? testData.experience.length : 'undefined');
+        
+        document.getElementById('experience-debug').innerHTML = `
+            Array: ${Array.isArray(testData.experience)}<br>
+            Length: ${testData.experience ? testData.experience.length : 'undefined'}<br>
+            Data: ${JSON.stringify(testData.experience, null, 2)}
+        `;
+        
+        if (testData.experience && Array.isArray(testData.experience)) {
+            testData.experience.forEach((exp, index) => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerHTML = `<strong>${index + 1}.</strong> ${exp.title} - ${exp.company} (${exp.period})`;
+                document.getElementById('experience-list').appendChild(div);
+            });
+        }
+        
+        // Testar Habilidades
+        console.log('=== TESTING SKILLS ===');
+        console.log('Skills data:', testData.skills);
+        console.log('Is array:', Array.isArray(testData.skills));
+        console.log('Length:', testData.skills ? testData.skills.length : 'undefined');
+        
+        document.getElementById('skills-debug').innerHTML = `
+            Array: ${Array.isArray(testData.skills)}<br>
+            Length: ${testData.skills ? testData.skills.length : 'undefined'}<br>
+            Data: ${JSON.stringify(testData.skills, null, 2)}
+        `;
+        
+        if (testData.skills && Array.isArray(testData.skills)) {
+            testData.skills.forEach((skill, index) => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerHTML = `<strong>${index + 1}.</strong> ${skill.category_title}: ${skill.skills_list}`;
+                document.getElementById('skills-list').appendChild(div);
+            });
+        }
+        
+        // Testar Portfólio
+        console.log('=== TESTING PORTFOLIO ===');
+        console.log('Portfolio data:', testData.portfolio);
+        console.log('Is array:', Array.isArray(testData.portfolio));
+        console.log('Length:', testData.portfolio ? testData.portfolio.length : 'undefined');
+        
+        document.getElementById('portfolio-debug').innerHTML = `
+            Array: ${Array.isArray(testData.portfolio)}<br>
+            Length: ${testData.portfolio ? testData.portfolio.length : 'undefined'}<br>
+            Data: ${JSON.stringify(testData.portfolio, null, 2)}
+        `;
+        
+        if (testData.portfolio && Array.isArray(testData.portfolio)) {
+            testData.portfolio.forEach((project, index) => {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerHTML = `<strong>${index + 1}.</strong> ${project.title}: ${project.description}`;
+                document.getElementById('portfolio-list').appendChild(div);
+            });
+        }
+        
+        console.log('=== DEBUG TEST COMPLETE ===');
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste Dados Normalizados</title>
+</head>
+<body>
+    <h1>Teste de Dados Normalizados</h1>
+    <button onclick="testNormalizedData('en')">Testar Inglês</button>
+    <button onclick="testNormalizedData('pt')">Testar Português</button>
+    <button onclick="testNormalizedData('es')">Testar Espanhol</button>
+    
+    <div id="output"></div>
+
+    <script>
+        async function testNormalizedData(lang) {
+            const output = document.getElementById('output');
+            
+            try {
+                output.innerHTML = `Testando dados normalizados para ${lang}...<br>`;
+                
+                const response = await fetch('data/cv_data_normalized.json');
+                const allData = await response.json();
+                
+                if (allData[lang]) {
+                    const data = allData[lang];
+                    output.innerHTML = `
+                        <h2>Dados normalizados para ${lang}:</h2>
+                        <h3>Nome:</h3>
+                        <p>${data.hero.name}</p>
+                        <h3>Experiências (${data.experience.length} registros):</h3>
+                        ${data.experience.map((exp, i) => `
+                            <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+                                <strong>${i+1}. ${exp.title}</strong> - ${exp.company}<br>
+                                <em>${exp.period}</em><br>
+                                <p>${exp.description}</p>
+                            </div>
+                        `).join('')}
+                        <h3>Habilidades (${data.skills.length} categorias):</h3>
+                        ${data.skills.map((skill, i) => `
+                            <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+                                <strong>${i+1}. ${skill.category_title}</strong><br>
+                                <p>${skill.skills_list}</p>
+                            </div>
+                        `).join('')}
+                        <h3>Portfólio (${data.portfolio.length} projetos):</h3>
+                        ${data.portfolio.map((project, i) => `
+                            <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+                                <strong>${i+1}. ${project.title}</strong><br>
+                                <p>${project.description}</p>
+                            </div>
+                        `).join('')}
+                    `;
+                } else {
+                    output.innerHTML = `<p>Idioma ${lang} não encontrado</p>`;
+                }
+                
+            } catch (error) {
+                output.innerHTML = `<p>Erro: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

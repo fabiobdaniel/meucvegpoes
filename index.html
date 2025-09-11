@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabio Bittencourt Daniel - Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>Fabio Bittencourt Daniel</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#inicio" data-translate="nav.home">Início</a></li>
+                    <li><a href="#sobre" data-translate="nav.about">Sobre</a></li>
+                    <li><a href="#experiencia" data-translate="nav.experience">Experiência</a></li>
+                    <li><a href="#habilidades" data-translate="nav.skills">Habilidades</a></li>
+                    <li><a href="#portfolio" data-translate="nav.portfolio">Portfólio</a></li>
+                    <li><a href="#contato" data-translate="nav.contact">Contato</a></li>
+                    <li><a href="#" id="editModeBtn" class="edit-btn"><i class="fas fa-edit"></i> Editar</a></li>
+                </ul>
+            </nav>
+            <div class="header-controls">
+                <div class="language-selector">
+                    <select id="languageSelect">
+                        <option value="pt">🇧🇷 Português</option>
+                        <option value="en">🇺🇸 English</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <div class="content-grid">
+                <!-- Left Section -->
+                <div class="left-section">
+                    <div class="hero">
+                        <h1 class="name" data-translate="hero.name">Fabio Bittencourt Daniel</h1>
+                        <h2 class="title" data-translate="hero.title">Estrategista de Negócios Globais & Desenvolvimento Empresarial</h2>
+                        <p class="description" data-translate="hero.description">
+                            Ao longo da minha trajetória em Estratégia de Negócios Globais, desenvolvi habilidades essenciais para liderar transformações empresariais, construir parcerias estratégicas e entender as necessidades do mercado internacional. Agora, trago essa experiência para a área de Desenvolvimento Empresarial, onde sigo focada em proporcionar soluções de alto valor, fortalecer conexões globais e impulsionar o crescimento e inovação.
+                        </p>
+                        <div class="cta-buttons">
+                            <button class="btn-primary" data-translate="hero.contact">Entre em Contato</button>
+                            <button class="btn-secondary" data-translate="hero.learn">Saiba Mais</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Section - Feature Cards -->
+                <div class="right-section">
+                    <div class="cards-grid">
+                        <div class="card">
+                            <div class="card-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h3 data-translate="cards.innovation.title">Inovação</h3>
+                            <p data-translate="cards.innovation.desc">Sempre à frente das tendências</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3 data-translate="cards.leadership.title">Liderança</h3>
+                            <p data-translate="cards.leadership.desc">Gestão de equipes de alta performance</p>
+                        </div>
+                        <div class="card">
+                            <div class="card-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 data-translate="cards.results.title">Resultados</h3>
+                            <p data-translate="cards.results.desc">Foco em entregas de valor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- About Section -->
+    <section id="sobre" class="section">
+        <div class="container">
+            <h2 data-translate="about.title">Sobre Mim</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p data-translate="about.text1">
+                        Profissional experiente em estratégias de negócios globais com mais de 10 anos de experiência no mercado internacional.
+                    </p>
+                    <p data-translate="about.text2">
+                        Especializado em desenvolvimento de estratégias de expansão, análise de mercados emergentes e implementação de soluções inovadoras para empresas multinacionais.
+                    </p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat">
+                        <h3 data-translate="about.stats.projects">+50</h3>
+                        <p data-translate="about.stats.projectsLabel">Projetos Concluídos</p>
+                    </div>
+                    <div class="stat">
+                        <h3 data-translate="about.stats.countries">+20</h3>
+                        <p data-translate="about.stats.countriesLabel">Países Atendidos</p>
+                    </div>
+                    <div class="stat">
+                        <h3 data-translate="about.stats.years">10+</h3>
+                        <p data-translate="about.stats.yearsLabel">Anos de Experiência</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experiencia" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="experience.title">Experiência Profissional</h2>
+                <div class="scroll-controls">
+                    <button id="expScrollUp" class="scroll-btn" title="Ver experiências anteriores">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                    <span id="expCounter" class="scroll-counter">1-8 de 8</span>
+                    <button id="expScrollDown" class="scroll-btn" title="Ver próximas experiências">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="timeline-container">
+                <div class="timeline">
+                    <!-- Timeline items will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="habilidades" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="skills.title">Habilidades</h2>
+                <div class="scroll-controls">
+                    <button id="skillsScrollUp" class="scroll-btn" title="Ver categorias anteriores">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                    <span id="skillsCounter" class="scroll-counter">1-10 de 10</span>
+                    <button id="skillsScrollDown" class="scroll-btn" title="Ver próximas categorias">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="skills-container">
+                <div class="skills-grid">
+                    <!-- Skill categories will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 data-translate="portfolio.title">Portfólio</h2>
+                <div class="scroll-controls">
+                    <button id="portfolioScrollUp" class="scroll-btn" title="Ver projetos anteriores">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                    <span id="portfolioCounter" class="scroll-counter">1-12 de 12</span>
+                    <button id="portfolioScrollDown" class="scroll-btn" title="Ver próximos projetos">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="portfolio-container">
+                <div class="portfolio-grid">
+                    <!-- Portfolio items will be populated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contato" class="section">
+        <div class="container">
+            <h2 data-translate="contact.title">Contato</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>fabio@fbdglobal.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+55 (11) 99999-9999</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>São Paulo, Brasil</span>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <input type="text" placeholder="Nome" required>
+                        <input type="email" placeholder="Email" required>
+                        <textarea placeholder="Mensagem" rows="5" required></textarea>
+                        <button type="submit" data-translate="contact.send">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content edit-modal">
+            <span class="close">&times;</span>
+            <h2 data-translate="edit.title">Editar Dados do CV</h2>
+            
+                <!-- Login Section -->
+                <div class="edit-section">
+                    <h3 data-translate="edit.login.title">Credenciais de Acesso</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-translate="edit.login.username">Usuário</label>
+                            <input type="text" id="editUsername" name="username" placeholder="Digite seu usuário">
+                        </div>
+                        <div class="form-group">
+                            <label data-translate="edit.login.password">Senha</label>
+                            <input type="password" id="editPassword" name="password" placeholder="Digite sua senha">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-translate="edit.login.language">Idioma para Edição</label>
+                            <select id="editLanguageSelect">
+                                <option value="en">English</option>
+                                <option value="pt">Português</option>
+                                <option value="es">Español</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <button type="button" id="loginAndEditBtn" class="btn btn-primary">
+                            <i class="fas fa-unlock"></i> <span data-translate="edit.login.submit">Confirmar e Editar</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Edit Form (Hidden initially) -->
+                <div id="editFormContainer" style="display: none;">
+            
+            <form id="editForm">
+                <!-- Hero Section -->
+                <div class="edit-section">
+                    <h3 data-translate="edit.sections.hero">Seção Principal</h3>
+                    <div class="form-group">
+                        <label data-translate="edit.hero.name">Nome Completo</label>
+                        <input type="text" id="editName" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label data-translate="edit.hero.title">Título Profissional</label>
+                        <input type="text" id="editTitle" name="title">
+                    </div>
+                    <div class="form-group">
+                        <label data-translate="edit.hero.description">Descrição</label>
+                        <textarea id="editDescription" name="description" rows="4"></textarea>
+                    </div>
+                </div>
+
+                <!-- About Section -->
+                <div class="edit-section">
+                    <h3 data-translate="edit.sections.about">Sobre Mim</h3>
+                    <div class="form-group">
+                        <label data-translate="edit.about.text1">Texto 1</label>
+                        <textarea id="editAbout1" name="about1" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label data-translate="edit.about.text2">Texto 2</label>
+                        <textarea id="editAbout2" name="about2" rows="3"></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label data-translate="edit.about.stats.projects">Projetos Concluídos</label>
+                            <input type="text" id="editStatsProjects" name="statsProjects">
+                        </div>
+                        <div class="form-group">
+                            <label data-translate="edit.about.stats.countries">Países Atendidos</label>
+                            <input type="text" id="editStatsCountries" name="statsCountries">
+                        </div>
+                        <div class="form-group">
+                            <label data-translate="edit.about.stats.years">Anos de Experiência</label>
+                            <input type="text" id="editStatsYears" name="statsYears">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience Section -->
+                <div class="edit-section">
+                    <h3 data-translate="edit.sections.experience">Experiência Profissional</h3>
+                    <!-- Dynamic experience fields will be generated here -->
+                </div>
+
+                <!-- Skills Section -->
+                <div class="edit-section">
+                    <h3 data-translate="edit.sections.skills">Habilidades</h3>
+                    <!-- Dynamic skills fields will be generated here -->
+                </div>
+
+                <!-- Portfolio Section -->
+                <div class="edit-section">
+                    <h3 data-translate="edit.sections.portfolio">Portfólio</h3>
+                    <!-- Dynamic portfolio fields will be generated here -->
+                </div>
+
+                <!-- Contact Section -->
+                <div class="edit-section">
+                    <h3 data-translate="edit.sections.contact">Contato</h3>
+                    <div class="form-group">
+                        <label data-translate="edit.contact.email">Email</label>
+                        <input type="email" id="editContactEmail" name="contactEmail">
+                    </div>
+                    <div class="form-group">
+                        <label data-translate="edit.contact.phone">Telefone</label>
+                        <input type="text" id="editContactPhone" name="contactPhone">
+                    </div>
+                    <div class="form-group">
+                        <label data-translate="edit.contact.location">Localização</label>
+                        <input type="text" id="editContactLocation" name="contactLocation">
+                    </div>
+                </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="cancelEdit" data-translate="edit.cancel">Cancelar</button>
+                        <button type="submit" data-translate="edit.save">Salvar Alterações</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data_embedded.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

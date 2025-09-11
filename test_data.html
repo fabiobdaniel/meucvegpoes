@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste de Dados</title>
+</head>
+<body>
+    <h1>Teste de Carregamento de Dados</h1>
+    <button onclick="testData('en')">Testar Inglês</button>
+    <button onclick="testData('pt')">Testar Português</button>
+    <button onclick="testData('es')">Testar Espanhol</button>
+    
+    <div id="output"></div>
+
+    <script>
+        async function testData(lang) {
+            const output = document.getElementById('output');
+            
+            try {
+                output.innerHTML = `Testando carregamento para ${lang}...<br>`;
+                
+                const response = await fetch('data/cv_data.json');
+                const allData = await response.json();
+                
+                if (allData[lang]) {
+                    const data = allData[lang];
+                    output.innerHTML = `
+                        <h2>Dados carregados para ${lang}:</h2>
+                        <h3>Nome:</h3>
+                        <p>${data.hero.name}</p>
+                        <h3>Título:</h3>
+                        <p>${data.hero.title}</p>
+                        <h3>Descrição:</h3>
+                        <p>${data.hero.description}</p>
+                        <h3>Experiência 1:</h3>
+                        <p><strong>${data.experience.job1_title}</strong> - ${data.experience.job1_company}</p>
+                        <p>${data.experience.job1_description}</p>
+                    `;
+                } else {
+                    output.innerHTML = `<p>Idioma ${lang} não encontrado</p>`;
+                }
+                
+            } catch (error) {
+                output.innerHTML = `<p>Erro: ${error.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>

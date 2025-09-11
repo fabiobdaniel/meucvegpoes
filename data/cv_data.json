@@ -1,0 +1,209 @@
+{
+  "en": {
+    "hero": {
+      "name": "Fabio Bittencourt Daniel",
+      "title": "Global Business Strategist & Business Development",
+      "description": "Throughout my career in Global Business Strategy, I have developed essential skills to lead business transformations, build strategic partnerships and understand the needs of the international market. Now, I bring this experience to the Business Development area, where I remain focused on providing high-value solutions, strengthening global connections and driving growth and innovation."
+    },
+    "about": {
+      "text1": "Experienced professional in global business strategies with more than 10 years of experience in the international market.",
+      "text2": "Specialized in developing expansion strategies, analyzing emerging markets and implementing innovative solutions for multinational companies.",
+      "stats_projects": "+50",
+      "stats_projects_label": "Completed Projects",
+      "stats_countries": "+20",
+      "stats_countries_label": "Countries Served",
+      "stats_years": "10+",
+      "stats_years_label": "Years of Experience"
+    },
+    "experience": [
+      {
+        "title": "CEO & Founder",
+        "company": "FBD Global Business Strategy",
+        "period": "2020 - Present",
+        "description": "Strategic leadership of the company, development of international partnerships and implementation of innovative solutions for global clients.",
+        "order_index": 1
+      },
+      {
+        "title": "Strategy Director",
+        "company": "Multinational Company",
+        "period": "2018 - 2020",
+        "description": "Development and implementation of international expansion strategies, market analysis and management of multicultural teams.",
+        "order_index": 2
+      }
+    ],
+    "skills": [
+      {
+        "category_title": "Business Strategy",
+        "skills_list": "Market Analysis,Strategic Planning,Business Development",
+        "order_index": 1
+      },
+      {
+        "category_title": "Leadership",
+        "skills_list": "Team Management,Cross-cultural Communication,Decision Making",
+        "order_index": 2
+      },
+      {
+        "category_title": "Technology",
+        "skills_list": "Data Analysis,Management Tools,Digital Innovation",
+        "order_index": 3
+      }
+    ],
+    "portfolio": [
+      {
+        "title": "International Expansion",
+        "description": "Entry strategy into 15 new markets",
+        "order_index": 1
+      },
+      {
+        "title": "Strategic Partnerships",
+        "description": "Development of global alliances",
+        "order_index": 2
+      },
+      {
+        "title": "Revenue Growth",
+        "description": "300% increase in 3 years",
+        "order_index": 3
+      }
+    ],
+    "contact": {
+      "email": "fabio@fbdglobal.com",
+      "phone": "+1 (555) 123-4567",
+      "location": "Miami, FL, USA"
+    },
+    "cards": [
+      {
+        "title": "Innovation",
+        "description": "Always ahead of trends",
+        "order_index": 1
+      },
+      {
+        "title": "Leadership",
+        "description": "High-performance team management",
+        "order_index": 2
+      },
+      {
+        "title": "Results",
+        "description": "Focus on value delivery",
+        "order_index": 3
+      }
+    ]
+  },
+  "pt": {
+    "hero": {
+      "name": "Fabio Bittencourt Daniel",
+      "title": "Estrategista de Negócios Globais & Desenvolvimento Empresarial",
+      "description": "Ao longo da minha trajetória em Estratégia de Negócios Globais, desenvolvi habilidades essenciais para liderar transformações empresariais, construir parcerias estratégicas e entender as necessidades do mercado internacional. Agora, trago essa experiência para a área de Desenvolvimento Empresarial, onde sigo focada em proporcionar soluções de alto valor, fortalecer conexões globais e impulsionar o crescimento e inovação."
+    },
+    "about": {
+      "text1": "Profissional experiente em estratégias de negócios globais com mais de 10 anos de experiência no mercado internacional.",
+      "text2": "Especializado em desenvolvimento de estratégias de expansão, análise de mercados emergentes e implementação de soluções inovadoras para empresas multinacionais.",
+      "stats_projects": "+50",
+      "stats_projects_label": "Projetos Concluídos",
+      "stats_countries": "+20",
+      "stats_countries_label": "Países Atendidos",
+      "stats_years": "10+",
+      "stats_years_label": "Anos de Experiência"
+    },
+    "experience": [
+      {
+        "title": "CEO & Fundador",
+        "company": "FBD Global Business Strategy",
+        "period": "2020 - Presente",
+        "description": "Liderança estratégica da empresa, desenvolvimento de parcerias internacionais e implementação de soluções inovadoras para clientes globais.",
+        "order_index": 1
+      },
+      {
+        "title": "Diretor de Estratégia",
+        "company": "Empresa Multinacional",
+        "period": "2018 - 2020",
+        "description": "Desenvolvimento e implementação de estratégias de expansão internacional, análise de mercados e gestão de equipes multiculturais.",
+        "order_index": 2
+      }
+    ],
+    "skills": {
+      "strategy_title": "Estratégia de Negócios",
+      "strategy_items": "Análise de Mercado,Planejamento Estratégico,Desenvolvimento de Negócios",
+      "leadership_title": "Liderança",
+      "leadership_items": "Gestão de Equipes,Comunicação Intercultural,Tomada de Decisão",
+      "tech_title": "Tecnologia",
+      "tech_items": "Análise de Dados,Ferramentas de Gestão,Inovação Digital"
+    },
+    "portfolio": {
+      "project1_title": "Expansão Internacional",
+      "project1_desc": "Estratégia de entrada em 15 novos mercados",
+      "project2_title": "Parcerias Estratégicas",
+      "project2_desc": "Desenvolvimento de alianças globais",
+      "project3_title": "Crescimento de Receita",
+      "project3_desc": "Aumento de 300% em 3 anos"
+    },
+    "contact": {
+      "email": "fabio@fbdglobal.com",
+      "phone": "+55 (11) 99999-9999",
+      "location": "São Paulo, Brasil"
+    },
+    "cards": {
+      "innovation_title": "Inovação",
+      "innovation_desc": "Sempre à frente das tendências",
+      "leadership_title": "Liderança",
+      "leadership_desc": "Gestão de equipes de alta performance",
+      "results_title": "Resultados",
+      "results_desc": "Foco em entregas de valor"
+    }
+  },
+  "es": {
+    "hero": {
+      "name": "Fabio Bittencourt Daniel",
+      "title": "Estratega de Negocios Globales y Desarrollo Empresarial",
+      "description": "A lo largo de mi trayectoria en Estrategia de Negocios Globales, he desarrollado habilidades esenciales para liderar transformaciones empresariales, construir alianzas estratégicas y entender las necesidades del mercado internacional. Ahora, trago esta experiencia al área de Desarrollo Empresarial, donde sigo enfocado en proporcionar soluciones de alto valor, fortalecer conexiones globales e impulsar el crecimiento y la innovación."
+    },
+    "about": {
+      "text1": "Profesional experimentado en estrategias de negocios globales con más de 10 años de experiencia en el mercado internacional.",
+      "text2": "Especializado en el desarrollo de estrategias de expansión, análisis de mercados emergentes e implementación de soluciones innovadoras para empresas multinacionales.",
+      "stats_projects": "+50",
+      "stats_projects_label": "Proyectos Completados",
+      "stats_countries": "+20",
+      "stats_countries_label": "Países Atendidos",
+      "stats_years": "10+",
+      "stats_years_label": "Años de Experiencia"
+    },
+    "experience": {
+      "job1_title": "CEO y Fundador",
+      "job1_company": "FBD Global Business Strategy",
+      "job1_period": "2020 - Presente",
+      "job1_description": "Liderazgo estratégico de la empresa, desarrollo de alianzas internacionales e implementación de soluciones innovadoras para clientes globales.",
+      "job2_title": "Director de Estrategia",
+      "job2_company": "Empresa Multinacional",
+      "job2_period": "2018 - 2020",
+      "job2_description": "Desarrollo e implementación de estrategias de expansión internacional, análisis de mercados y gestión de equipos multiculturales."
+    },
+    "skills": {
+      "strategy_title": "Estrategia de Negocios",
+      "strategy_items": "Análisis de Mercado,Planificación Estratégica,Desarrollo de Negocios",
+      "leadership_title": "Liderazgo",
+      "leadership_items": "Gestión de Equipos,Comunicación Intercultural,Toma de Decisiones",
+      "tech_title": "Tecnología",
+      "tech_items": "Análisis de Datos,Herramientas de Gestión,Innovación Digital"
+    },
+    "portfolio": {
+      "project1_title": "Expansión Internacional",
+      "project1_desc": "Estrategia de entrada en 15 nuevos mercados",
+      "project2_title": "Alianzas Estratégicas",
+      "project2_desc": "Desarrollo de alianzas globales",
+      "project3_title": "Crecimiento de Ingresos",
+      "project3_desc": "Aumento del 300% en 3 años"
+    },
+    "contact": {
+      "email": "fabio@fbdglobal.com",
+      "phone": "+1 (555) 123-4567",
+      "location": "Miami, FL, EUA"
+    },
+    "cards": {
+      "innovation_title": "Innovación",
+      "innovation_desc": "Siempre a la vanguardia de las tendencias",
+      "leadership_title": "Liderazgo",
+      "leadership_desc": "Gestión de equipos de alto rendimiento",
+      "results_title": "Resultados",
+      "results_desc": "Enfoque en la entrega de valor"
+    }
+  }
+}

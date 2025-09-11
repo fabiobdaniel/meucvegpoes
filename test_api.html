@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste da API</title>
+</head>
+<body>
+    <h1>Teste da API</h1>
+    <button onclick="testAPI('en')">Testar Inglês</button>
+    <button onclick="testAPI('pt')">Testar Português</button>
+    <button onclick="testAPI('es')">Testar Espanhol</button>
+    
+    <div id="result"></div>
+
+    <script>
+        async function testAPI(lang) {
+            try {
+                const response = await fetch(`api/simple.php?action=get_data&lang=${lang}`);
+                const result = await response.json();
+                
+                document.getElementById('result').innerHTML = `
+                    <h2>Resultado para ${lang}:</h2>
+                    <pre>${JSON.stringify(result, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('result').innerHTML = `
+                    <h2>Erro:</h2>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

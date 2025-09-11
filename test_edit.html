@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste de Edição</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .form-group { margin: 10px 0; }
+        label { display: block; font-weight: bold; }
+        input, textarea, select { width: 100%; padding: 5px; margin: 5px 0; }
+        button { padding: 10px 20px; margin: 10px 5px; }
+        .section { border: 1px solid #ccc; margin: 20px 0; padding: 15px; }
+    </style>
+</head>
+<body>
+    <h1>Teste de Edição - Dados Normalizados</h1>
+    
+    <div class="section">
+        <h2>Login</h2>
+        <div class="form-group">
+            <label>Usuário:</label>
+            <input type="text" id="editUsername" value="fabio">
+        </div>
+        <div class="form-group">
+            <label>Senha:</label>
+            <input type="password" id="editPassword" value="1407">
+        </div>
+        <div class="form-group">
+            <label>Idioma:</label>
+            <select id="editLanguageSelect">
+                <option value="en">English</option>
+                <option value="pt">Português</option>
+                <option value="es">Español</option>
+            </select>
+        </div>
+        <button onclick="testLogin()">Testar Login e Carregar Dados</button>
+    </div>
+    
+    <div id="dataDisplay" class="section" style="display: none;">
+        <h2>Dados Carregados</h2>
+        <div id="dataContent"></div>
+    </div>
+    
+    <div id="editForm" class="section" style="display: none;">
+        <h2>Formulário de Edição</h2>
+        <div class="form-group">
+            <label>Nome:</label>
+            <input type="text" id="editName">
+        </div>
+        <div class="form-group">
+            <label>Título:</label>
+            <input type="text" id="editTitle">
+        </div>
+        <div class="form-group">
+            <label>Descrição:</label>
+            <textarea id="editDescription" rows="3"></textarea>
+        </div>
+        <button onclick="testSave()">Testar Salvamento</button>
+    </div>
+    
+    <div id="output"></div>
+
+    <script src="data_embedded.js"></script>
+    <script>
+        let allLanguageData = {};
+        let cvData = {};
+        let currentLanguage = 'en';
+
+        async function testLogin() {
+            const output = document.getElementById('output');
+            const username = document.getElementById('editUsername').value;
+            const password = document.getElementById('editPassword').value;
+            const editLanguage = document.getElementById('editLanguageSelect').value;
+            
+            output.innerHTML = `Testando login para ${editLanguage}...<br>`;
+            
+            if (username === 'fabio' && password === '1407') {
+                output.innerHTML += 'Credenciais corretas!<br>';
+                
+                try {
+                    // Carregar dados se necessário
+                    if (Object.keys(allLanguageData).length === 0) {
+                        output.innerHTML += 'Carregando dados embutidos...<br>';
+                        allLanguageData = EMBEDDED_CV_DATA;
+                        output.innerHTML += `Dados carregados! Idiomas disponíveis: ${Object.keys(allLanguageData).join(', ')}<br>`;
+                    }
+                    
+                    if (allLanguageData[editLanguage]) {
+                        cvData = allLanguageData[editLanguage];
+                        currentLanguage = editLanguage;
+                        
+                        // Mostrar dados
+                        document.getElementById('dataDisplay').style.display = 'block';
+                        document.getElementById('dataContent').innerHTML = `
+                            <h3>Dados para ${editLanguage}:</h3>
+                            <p><strong>Nome:</strong> ${cvData.hero.name}</p>
+                            <p><strong>Título:</strong> ${cvData.hero.title}</p>
+                            <p><strong>Experiências:</strong> ${cvData.experience.length} registros</p>
+                            <p><strong>Habilidades:</strong> ${cvData.skills.length} categorias</p>
+                            <p><strong>Portfólio:</strong> ${cvData.portfolio.length} projetos</p>
+                        `;
+                        
+                        // Mostrar formulário de edição
+                        document.getElementById('editForm').style.display = 'block';
+                        loadEditForm();
+                        
+                        output.innerHTML += 'Login e carregamento bem-sucedidos!<br>';
+                    } else {
+                        output.innerHTML += `Erro: Idioma ${editLanguage} não encontrado!<br>`;
+                    }
+                } catch (error) {
+                    output.innerHTML += `Erro: ${error.message}<br>`;
+                }
+            } else {
+                output.innerHTML += 'Credenciais incorretas!<br>';
+            }
+        }
+        
+        function loadEditForm() {
+            document.getElementById('editName').value = cvData.hero?.name || '';
+            document.getElementById('editTitle').value = cvData.hero?.title || '';
+            document.getElementById('editDescription').value = cvData.hero?.description || '';
+        }
+        
+        function testSave() {
+            const output = document.getElementById('output');
+            
+            // Simular salvamento
+            const newData = {
+                hero: {
+                    name: document.getElementById('editName').value,
+                    title: document.getElementById('editTitle').value,
+                    description: document.getElementById('editDescription').value
+                }
+            };
+            
+            // Atualizar dados na memória
+            allLanguageData[currentLanguage].hero = newData.hero;
+            cvData = allLanguageData[currentLanguage];
+            
+            output.innerHTML += 'Dados salvos com sucesso!<br>';
+            output.innerHTML += `Novo nome: ${cvData.hero.name}<br>`;
+            output.innerHTML += `Novo título: ${cvData.hero.title}<br>`;
+        }
+    </script>
+</body>
+</html>
