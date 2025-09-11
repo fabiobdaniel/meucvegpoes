@@ -385,15 +385,27 @@ const interfaceTranslations = {
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, initializing app...');
+    console.log('=== DOM LOADED ===');
     
-    // Simple approach - load data immediately
+    // Check if data is available
+    console.log('EMBEDDED_CV_DATA available:', typeof EMBEDDED_CV_DATA !== 'undefined');
+    
     if (typeof EMBEDDED_CV_DATA !== 'undefined') {
+        console.log('EMBEDDED_CV_DATA keys:', Object.keys(EMBEDDED_CV_DATA));
+        console.log('Portuguese data available:', !!EMBEDDED_CV_DATA['pt']);
+        console.log('Experience data:', EMBEDDED_CV_DATA['pt'].experience);
+        console.log('Skills data:', EMBEDDED_CV_DATA['pt'].skills);
+        console.log('Portfolio data:', EMBEDDED_CV_DATA['pt'].portfolio);
+        
         allLanguageData = EMBEDDED_CV_DATA;
         cvData = allLanguageData['pt'];
         console.log('Data loaded immediately:', cvData);
+        
+        // Force update immediately
         updatePageContent();
         applyInterfaceTranslations();
+    } else {
+        console.error('EMBEDDED_CV_DATA not available!');
     }
     
     // Setup edit button with simple approach
@@ -406,6 +418,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('editModal').style.display = 'block';
             };
             console.log('Edit button setup complete');
+        } else {
+            console.error('Edit button not found!');
         }
     }, 1000);
     
@@ -950,18 +964,24 @@ function updatePageContent() {
 
     // Experience section - SIMPLIFIED
     console.log('=== UPDATING EXPERIENCE ===');
-    console.log('Experience data:', cvData.experience);
+    console.log('CV Data exists:', !!cvData);
+    console.log('Experience data exists:', !!(cvData && cvData.experience));
+    console.log('Experience data type:', typeof (cvData && cvData.experience));
+    console.log('Experience data:', cvData && cvData.experience);
     
-    if (cvData.experience && Array.isArray(cvData.experience)) {
+    if (cvData && cvData.experience && Array.isArray(cvData.experience)) {
         console.log('Number of experiences:', cvData.experience.length);
         
         const timelineContainer = document.querySelector('.timeline');
+        console.log('Timeline container found:', !!timelineContainer);
+        
         if (timelineContainer) {
             console.log('Timeline container found, updating content...');
             timelineContainer.innerHTML = '';
             
             // Add experiences directly
             cvData.experience.forEach((exp, index) => {
+                console.log(`Adding experience ${index + 1}:`, exp.title);
                 const timelineItem = document.createElement('div');
                 timelineItem.className = 'timeline-item';
                 timelineItem.innerHTML = `
@@ -980,7 +1000,7 @@ function updatePageContent() {
             console.error('Timeline container not found!');
         }
     } else {
-        console.log('No experience data available');
+        console.log('No experience data available or not an array');
     }
 
     // Skills section - SIMPLIFIED
