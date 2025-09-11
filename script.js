@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cvData = allLanguageData['pt'];
         console.log('Data loaded immediately:', cvData);
         
-        // Force update immediately
+        // Update page content and translations
         updatePageContent();
         applyInterfaceTranslations();
     } else {
@@ -432,21 +432,15 @@ function initializeApp() {
     // Set up event listeners
     setupEventListeners();
     
-    // Load CV data from API
-    loadCVData();
-    
     console.log('App initialized successfully!');
     
-    // Force update after a short delay to ensure DOM is ready
-    setTimeout(() => {
-        console.log('Force updating page content...');
-        if (cvData && Object.keys(cvData).length > 0) {
-            updatePageContent();
-        } else {
-            console.log('No CV data available, force loading...');
-            forceLoadData();
-        }
-    }, 1000);
+    // Only load data if not already loaded
+    if (!cvData || Object.keys(cvData).length === 0) {
+        console.log('No CV data available, loading...');
+        loadCVData();
+    } else {
+        console.log('CV data already loaded, skipping load');
+    }
 }
 
 function setupEventListeners() {
@@ -460,11 +454,13 @@ function setupEventListeners() {
             currentLanguage = this.value;
             
             // Se já temos os dados carregados, apenas trocar o idioma
-            if (allLanguageData[currentLanguage]) {
+            if (allLanguageData && allLanguageData[currentLanguage]) {
+                console.log('Switching to language data:', currentLanguage);
                 cvData = allLanguageData[currentLanguage];
                 updatePageContent();
                 applyInterfaceTranslations();
             } else {
+                console.log('Language data not available, loading...');
                 // Se não temos os dados, carregar
                 loadCVData();
             }
@@ -948,9 +944,15 @@ function updatePageContent() {
 
     // Hero section
     console.log('Updating hero section:', cvData.hero);
-    updateElement('.hero .name', cvData.hero?.name);
-    updateElement('.hero .title', cvData.hero?.title);
-    updateElement('.hero .description', cvData.hero?.description);
+    if (cvData.hero?.name) {
+        updateElement('.hero .name', cvData.hero.name);
+    }
+    if (cvData.hero?.title) {
+        updateElement('.hero .title', cvData.hero.title);
+    }
+    if (cvData.hero?.description) {
+        updateElement('.hero .description', cvData.hero.description);
+    }
 
     // About section
     updateElement('.about-text p:first-child', cvData.about?.text1);
@@ -1127,7 +1129,9 @@ function updatePageContent() {
 function updateElement(selector, content) {
     const element = document.querySelector(selector);
     console.log(`Updating ${selector} with:`, content);
-    if (element && content) {
+    if (element && content !== undefined && content !== null) {
+        // Clear existing content first to avoid duplication
+        element.textContent = '';
         element.textContent = content;
         console.log(`Successfully updated ${selector}`);
     } else {
@@ -1152,6 +1156,8 @@ function applyInterfaceTranslations() {
     elements.forEach(element => {
         const key = element.getAttribute('data-translate');
         if (interfaceTranslations[currentLanguage] && interfaceTranslations[currentLanguage][key]) {
+            // Clear content first to avoid duplication
+            element.textContent = '';
             element.textContent = interfaceTranslations[currentLanguage][key];
             console.log(`Translated ${key}: ${interfaceTranslations[currentLanguage][key]}`);
         } else {
@@ -1167,6 +1173,8 @@ function applyInterfaceTranslations() {
     
     // Update scroll control tooltips
     updateScrollTooltips();
+    
+    console.log('Interface translations applied successfully');
 }
 
 function updateScrollTooltips() {
