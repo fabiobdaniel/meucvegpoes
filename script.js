@@ -122,13 +122,6 @@ const FALLBACK_TRANSLATIONS = {
     }
 };
 
-// Edit button handler
-function handleEditClick(e) {
-    e.preventDefault();
-    console.log('Edit button clicked - opening modal');
-    alert('Botão editar clicado!'); // Teste simples
-    openEditModal();
-}
 
 // Translation functions
 async function translateText(text, fromLang, toLang) {
@@ -443,30 +436,20 @@ function setupEventListeners() {
         console.error('Language selector not found!');
     }
 
-    // Edit button - multiple approaches
+    // Edit button - direct approach
     const editModeBtn = document.getElementById('editModeBtn');
     console.log('Edit button element:', editModeBtn);
     
     if (editModeBtn) {
-        // Remove any existing listeners
-        editModeBtn.removeEventListener('click', handleEditClick);
-        
-        // Add new listener
-        editModeBtn.addEventListener('click', handleEditClick);
-        console.log('Edit button event listener added successfully');
+        editModeBtn.onclick = function(e) {
+            e.preventDefault();
+            console.log('Edit button clicked - opening modal');
+            openEditModal();
+        };
+        console.log('Edit button onclick handler added successfully');
     } else {
         console.error('Edit button not found!');
     }
-    
-    // Also try to add listener after DOM is fully loaded
-    setTimeout(() => {
-        const editBtn = document.getElementById('editModeBtn');
-        if (editBtn && !editBtn.hasAttribute('data-listener-added')) {
-            editBtn.addEventListener('click', handleEditClick);
-            editBtn.setAttribute('data-listener-added', 'true');
-            console.log('Edit button listener added after timeout');
-        }
-    }, 2000);
 
     // Login and edit button
     const loginAndEditBtn = document.getElementById('loginAndEditBtn');
@@ -574,6 +557,15 @@ function setupEventListeners() {
 
     // Scroll controls
     setupScrollControls();
+    
+    // Global click handler for edit button (fallback)
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'editModeBtn') {
+            e.preventDefault();
+            console.log('Edit button clicked via global handler');
+            openEditModal();
+        }
+    });
 }
 
 function setupScrollControls() {
@@ -1157,32 +1149,35 @@ function updateScrollTooltips() {
 // Modal functions
 function openEditModal() {
     console.log('openEditModal called');
-    try {
-        // Reset form and show login section
-        const editFormContainer = document.getElementById('editFormContainer');
-        const editSection = document.querySelector('.edit-section');
-        const editUsername = document.getElementById('editUsername');
-        const editPassword = document.getElementById('editPassword');
-        const editLanguageSelect = document.getElementById('editLanguageSelect');
-        
-        console.log('Elements found:', {
-            editFormContainer: !!editFormContainer,
-            editSection: !!editSection,
-            editUsername: !!editUsername,
-            editPassword: !!editPassword,
-            editLanguageSelect: !!editLanguageSelect
-        });
-        
-        if (editFormContainer) editFormContainer.style.display = 'none';
-        if (editSection) editSection.style.display = 'block';
-        if (editUsername) editUsername.value = '';
-        if (editPassword) editPassword.value = '';
-        if (editLanguageSelect) editLanguageSelect.value = currentLanguage;
-        
-        openModal('editModal');
+    
+    // Reset form and show login section
+    const editFormContainer = document.getElementById('editFormContainer');
+    const editSection = document.querySelector('.edit-section');
+    const editUsername = document.getElementById('editUsername');
+    const editPassword = document.getElementById('editPassword');
+    const editLanguageSelect = document.getElementById('editLanguageSelect');
+    
+    console.log('Elements found:', {
+        editFormContainer: !!editFormContainer,
+        editSection: !!editSection,
+        editUsername: !!editUsername,
+        editPassword: !!editPassword,
+        editLanguageSelect: !!editLanguageSelect
+    });
+    
+    if (editFormContainer) editFormContainer.style.display = 'none';
+    if (editSection) editSection.style.display = 'block';
+    if (editUsername) editUsername.value = '';
+    if (editPassword) editPassword.value = '';
+    if (editLanguageSelect) editLanguageSelect.value = currentLanguage;
+    
+    // Show modal
+    const modal = document.getElementById('editModal');
+    if (modal) {
+        modal.style.display = 'block';
         console.log('Modal opened successfully');
-    } catch (error) {
-        console.error('Error opening edit modal:', error);
+    } else {
+        console.error('Modal not found!');
     }
 }
 
