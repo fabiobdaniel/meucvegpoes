@@ -437,12 +437,15 @@ function setupEventListeners() {
 
     // Edit button
     const editModeBtn = document.getElementById('editModeBtn');
+    console.log('Edit button element:', editModeBtn);
     if (editModeBtn) {
         editModeBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Edit button clicked');
+            console.log('Edit button clicked - opening modal');
+            alert('Botão editar clicado!'); // Teste simples
             openEditModal();
         });
+        console.log('Edit button event listener added successfully');
     } else {
         console.error('Edit button not found!');
     }
@@ -1120,13 +1123,34 @@ function updateScrollTooltips() {
 
 // Modal functions
 function openEditModal() {
-    // Reset form and show login section
-    document.getElementById('editFormContainer').style.display = 'none';
-    document.querySelector('.edit-section').style.display = 'block';
-    document.getElementById('editUsername').value = '';
-    document.getElementById('editPassword').value = '';
-    document.getElementById('editLanguageSelect').value = currentLanguage;
-    openModal('editModal');
+    console.log('openEditModal called');
+    try {
+        // Reset form and show login section
+        const editFormContainer = document.getElementById('editFormContainer');
+        const editSection = document.querySelector('.edit-section');
+        const editUsername = document.getElementById('editUsername');
+        const editPassword = document.getElementById('editPassword');
+        const editLanguageSelect = document.getElementById('editLanguageSelect');
+        
+        console.log('Elements found:', {
+            editFormContainer: !!editFormContainer,
+            editSection: !!editSection,
+            editUsername: !!editUsername,
+            editPassword: !!editPassword,
+            editLanguageSelect: !!editLanguageSelect
+        });
+        
+        if (editFormContainer) editFormContainer.style.display = 'none';
+        if (editSection) editSection.style.display = 'block';
+        if (editUsername) editUsername.value = '';
+        if (editPassword) editPassword.value = '';
+        if (editLanguageSelect) editLanguageSelect.value = currentLanguage;
+        
+        openModal('editModal');
+        console.log('Modal opened successfully');
+    } catch (error) {
+        console.error('Error opening edit modal:', error);
+    }
 }
 
 async function handleLoginAndEdit() {
@@ -1399,7 +1423,15 @@ function collectDynamicPortfolioData() {
 }
 
 function openModal(modalId) {
-    document.getElementById(modalId).style.display = 'block';
+    console.log('openModal called with ID:', modalId);
+    const modal = document.getElementById(modalId);
+    console.log('Modal element found:', !!modal);
+    if (modal) {
+        modal.style.display = 'block';
+        console.log('Modal displayed');
+    } else {
+        console.error('Modal not found:', modalId);
+    }
 }
 
 function closeModal(modalId) {
