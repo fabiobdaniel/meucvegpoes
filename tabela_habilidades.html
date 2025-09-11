@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabela de Habilidades - Fábio Daniel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .language-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 10px;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            margin: 0 5px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            background: #ff6b35;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255,107,53,0.3);
+        }
+        
+        .tab:hover:not(.active) {
+            background: #e9ecef;
+            transform: translateY(-1px);
+        }
+        
+        .skills-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .skills-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        
+        .skills-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e9ecef;
+            vertical-align: top;
+        }
+        
+        .skills-table tr:hover {
+            background: #f8f9fa;
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+        
+        .category {
+            font-weight: 700;
+            color: #ff6b35;
+            font-size: 1.1em;
+        }
+        
+        .skills-list {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .expertise {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .expertise h3 {
+            color: #ff6b35;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .expertise-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff6b35;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .expertise-item h4 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .expertise-item ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .expertise-item li {
+            padding: 2px 0;
+            color: #666;
+        }
+        
+        .expertise-item li:before {
+            content: "✓ ";
+            color: #ff6b35;
+            font-weight: bold;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .language-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab {
+                margin: 5px 0;
+                width: 200px;
+            }
+            
+            .skills-table {
+                font-size: 0.9em;
+            }
+            
+            .skills-table th,
+            .skills-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Tabela de Habilidades</h1>
+            <p>Portfólio Profissional - Fábio Daniel</p>
+        </div>
+        
+        <div class="content">
+            <div class="language-tabs">
+                <button class="tab active" onclick="showLanguage('pt')">🇧🇷 Português</button>
+                <button class="tab" onclick="showLanguage('en')">🇺🇸 English</button>
+                <button class="tab" onclick="showLanguage('es')">🇪🇸 Español</button>
+            </div>
+            
+            <!-- Português -->
+            <div id="pt-content" class="language-content">
+                <table class="skills-table">
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Habilidades</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="category">Estratégia de Negócios</td>
+                            <td class="skills-list">Análise de Mercado, Planejamento Estratégico, Desenvolvimento de Negócios, Inteligência Competitiva</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Liderança</td>
+                            <td class="skills-list">Gestão de Equipes, Comunicação Intercultural, Tomada de Decisão, Gestão de Mudanças</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Tecnologia</td>
+                            <td class="skills-list">Análise de Dados, Ferramentas de Gestão, Inovação Digital, Sistemas CRM</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Negócios Internacionais</td>
+                            <td class="skills-list">Entrada em Mercados Globais, Comércio Internacional, Parcerias Transfronteiriças, Inteligência Cultural</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Finanças</td>
+                            <td class="skills-list">Modelagem Financeira, Planejamento Orçamentário, Análise de Investimentos, Avaliação de Riscos</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Marketing</td>
+                            <td class="skills-list">Marketing Digital, Estratégia de Marca, Marketing de Conteúdo, Mídias Sociais</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Operações</td>
+                            <td class="skills-list">Otimização de Processos, Gestão da Cadeia de Suprimentos, Controle de Qualidade, Gestão de Projetos</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Vendas</td>
+                            <td class="skills-list">Vendas B2B, Construção de Relacionamentos, Geração de Leads, Crescimento de Receita</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Idiomas</td>
+                            <td class="skills-list">Inglês (Nativo), Português (Fluente), Espanhol (Fluente), Francês (Intermediário)</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Software</td>
+                            <td class="skills-list">Microsoft Office, Salesforce, Tableau, Power BI, Google Analytics</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- English -->
+            <div id="en-content" class="language-content hidden">
+                <table class="skills-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Skills</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="category">Business Strategy</td>
+                            <td class="skills-list">Market Analysis, Strategic Planning, Business Development, Competitive Intelligence</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Leadership</td>
+                            <td class="skills-list">Team Management, Cross-cultural Communication, Decision Making, Change Management</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Technology</td>
+                            <td class="skills-list">Data Analysis, Management Tools, Digital Innovation, CRM Systems</td>
+                        </tr>
+                        <tr>
+                            <td class="category">International Business</td>
+                            <td class="skills-list">Global Market Entry, International Trade, Cross-border Partnerships, Cultural Intelligence</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Finance</td>
+                            <td class="skills-list">Financial Modeling, Budget Planning, Investment Analysis, Risk Assessment</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Marketing</td>
+                            <td class="skills-list">Digital Marketing, Brand Strategy, Content Marketing, Social Media</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Operations</td>
+                            <td class="skills-list">Process Optimization, Supply Chain Management, Quality Control, Project Management</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Sales</td>
+                            <td class="skills-list">B2B Sales, Relationship Building, Lead Generation, Revenue Growth</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Languages</td>
+                            <td class="skills-list">English (Native), Portuguese (Fluent), Spanish (Fluent), French (Intermediate)</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Software</td>
+                            <td class="skills-list">Microsoft Office, Salesforce, Tableau, Power BI, Google Analytics</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Español -->
+            <div id="es-content" class="language-content hidden">
+                <table class="skills-table">
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th>Habilidades</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="category">Estrategia de Negocios</td>
+                            <td class="skills-list">Análisis de Mercado, Planificación Estratégica, Desarrollo de Negocios, Inteligencia Competitiva</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Liderazgo</td>
+                            <td class="skills-list">Gestión de Equipos, Comunicación Intercultural, Toma de Decisiones, Gestión del Cambio</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Tecnología</td>
+                            <td class="skills-list">Análisis de Datos, Herramientas de Gestión, Innovación Digital, Sistemas CRM</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Negocios Internacionales</td>
+                            <td class="skills-list">Entrada a Mercados Globales, Comercio Internacional, Alianzas Transfronterizas, Inteligencia Cultural</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Finanzas</td>
+                            <td class="skills-list">Modelado Financiero, Planificación Presupuestaria, Análisis de Inversiones, Evaluación de Riesgos</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Marketing</td>
+                            <td class="skills-list">Marketing Digital, Estrategia de Marca, Marketing de Contenido, Redes Sociales</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Operaciones</td>
+                            <td class="skills-list">Optimización de Procesos, Gestión de Cadena de Suministro, Control de Calidad, Gestión de Proyectos</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Ventas</td>
+                            <td class="skills-list">Ventas B2B, Construcción de Relaciones, Generación de Leads, Crecimiento de Ingresos</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Idiomas</td>
+                            <td class="skills-list">Inglés (Nativo), Portugués (Fluido), Español (Fluido), Francés (Intermedio)</td>
+                        </tr>
+                        <tr>
+                            <td class="category">Software</td>
+                            <td class="skills-list">Microsoft Office, Salesforce, Tableau, Power BI, Google Analytics</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Categorias</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">40+</div>
+                    <div class="stat-label">Habilidades</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Idiomas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Softwares</div>
+                </div>
+            </div>
+            
+            <div class="expertise">
+                <h3>🎯 Competências Principais</h3>
+                <div class="expertise-grid">
+                    <div class="expertise-item">
+                        <h4>Liderança e Gestão</h4>
+                        <ul>
+                            <li>Gestão de Equipes Multinacionais</li>
+                            <li>Comunicação Intercultural</li>
+                            <li>Tomada de Decisão Estratégica</li>
+                            <li>Gestão de Mudanças Organizacionais</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-item">
+                        <h4>Estratégia e Negócios</h4>
+                        <ul>
+                            <li>Análise de Mercados Globais</li>
+                            <li>Planejamento Estratégico</li>
+                            <li>Desenvolvimento de Negócios</li>
+                            <li>Inteligência Competitiva</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-item">
+                        <h4>Tecnologia e Inovação</h4>
+                        <ul>
+                            <li>Análise de Dados Avançada</li>
+                            <li>Ferramentas de Gestão</li>
+                            <li>Inovação Digital</li>
+                            <li>Sistemas CRM</li>
+                        </ul>
+                    </div>
+                    <div class="expertise-item">
+                        <h4>Negócios Internacionais</h4>
+                        <ul>
+                            <li>Entrada em Mercados Globais</li>
+                            <li>Comércio Internacional</li>
+                            <li>Parcerias Transfronteiriças</li>
+                            <li>Inteligência Cultural</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showLanguage(lang) {
+            // Hide all content
+            document.querySelectorAll('.language-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected content
+            document.getElementById(lang + '-content').classList.remove('hidden');
+            
+            // Add active to clicked tab
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
