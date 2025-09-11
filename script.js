@@ -1826,7 +1826,7 @@ async function simulateEmailSend(data) {
 // Web3Forms email sending
 async function sendViaWeb3Forms(data) {
     const formData = new FormData();
-    formData.append('access_key', 'YOUR_ACCESS_KEY'); // Replace with your Web3Forms access key
+    formData.append('access_key', 'bfb7294a-a840-4234-8eaa-596bb36b56bf'); // Web3Forms access key
     formData.append('name', data.name);
     formData.append('email', data.email);
     formData.append('message', data.message);
