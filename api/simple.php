@@ -196,3 +196,4 @@ if ($action === 'get_data') {
     echo json_encode(['success' => false, 'error' => 'Invalid action']);
 }
 ?>
+

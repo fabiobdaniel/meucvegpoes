@@ -328,3 +328,4 @@ INSERT INTO cv_data (section_id, language_id, record_index, field_name, content)
 (7, 3, 2, 'title', 'Resultados'),
 (7, 3, 2, 'description', 'Enfoque en la entrega de valor'),
 (7, 3, 2, 'order_index', '3');
+
