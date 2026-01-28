@@ -169,25 +169,34 @@ body {
     gap: 1rem;
 }
 
-.btn-book-launch {
+.cta-buttons .btn-book-launch {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     background: #c9a227;
-    color: #1a0b2e;
-    border: none;
+    color: #1a0b2e !important;
+    border: 2px solid #a68520;
     padding: 1rem 2rem;
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-decoration: none;
+    text-decoration: none !important;
+    -webkit-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
 }
 
-.btn-book-launch:hover {
+.cta-buttons .btn-book-launch:hover {
     background: #b8921f;
+    color: #1a0b2e !important;
+    text-decoration: none !important;
     transform: translateY(-2px);
+}
+
+.cta-buttons .btn-book-launch i {
+    color: inherit;
 }
 
 .btn-primary {
