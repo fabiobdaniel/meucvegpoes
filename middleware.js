@@ -3,19 +3,22 @@ const REDIRECT_HOSTS = ['fabiobdaniel.com', 'www.fabiobdaniel.com'];
 const REDIRECT_TO = 'https://awakenyourhero.com.br';
 
 export default function middleware(request) {
-  const host = request.headers.get('host') || '';
-  if (REDIRECT_HOSTS.includes(host)) {
-    const url = new URL(request.url);
+  const url = new URL(request.url);
+  const hostname = (url.hostname || request.headers.get('host') || '').toLowerCase().split(':')[0];
+  if (REDIRECT_HOSTS.includes(hostname)) {
     const path = url.pathname + url.search;
     const target = path === '/' ? REDIRECT_TO : REDIRECT_TO + path;
     return new Response(null, {
       status: 301,
-      headers: { Location: target },
+      headers: {
+        Location: target,
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+      },
     });
   }
-  return undefined; // deixa a requisição seguir (meucvegpoes.vercel.app, etc.)
+  return undefined;
 }
 
 export const config = {
-  matcher: '/:path*',
+  matcher: ['/', '/:path*'],
 };
