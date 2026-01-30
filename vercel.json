@@ -6,24 +6,7 @@
       "use": "@vercel/static"
     }
   ],
-  "redirects": [
-    {
-      "source": "/:path*",
-      "destination": "https://awakenyourhero.com.br/:path*",
-      "permanent": true,
-      "has": [
-        { "type": "host", "value": "fabiobdaniel.com" }
-      ]
-    },
-    {
-      "source": "/:path*",
-      "destination": "https://awakenyourhero.com.br/:path*",
-      "permanent": true,
-      "has": [
-        { "type": "host", "value": "www.fabiobdaniel.com" }
-      ]
-    }
-  ],
+  "redirects": [],
   "rewrites": [
     {
       "source": "/(.*)",
